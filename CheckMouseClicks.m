@@ -24,8 +24,6 @@ while true
             [~, ~, buttons] = GetMouse();
         end
     end
-    
-    disp(clickedPoints);
 
     for i = 1:3
         clickedX = clickedPoints(i,1);
