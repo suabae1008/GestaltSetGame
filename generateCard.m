@@ -1,3 +1,12 @@
+%{
+입력 인수 정리
+screen : 사용할 윈도우 포인터 입력
+shape : 'circle', 'triangle', 'rectangle'
+color : 'red', 'yellow', 'blue'
+pattern : 'fill', 'frame', 'stripe'
+position : 그림이 그려질 정 중앙 좌표 (카드 크기는 300*400)
+ex) [1280 800] 입력시 카드는 [1130 600 1430 1000]에 그려짐
+%}
 function generateCard(screen, shape, color, pattern, position)
     % 카드 배경 만들기
     cardWidth = 150;
