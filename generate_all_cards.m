@@ -17,3 +17,7 @@ function all_cards = generate_all_cards()
         end
     end
 end
+
+
+
+% 검증 완료
