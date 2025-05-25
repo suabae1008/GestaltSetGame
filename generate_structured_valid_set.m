@@ -1,43 +1,55 @@
 function set_cards = generate_structured_valid_set()
-    
-    % 세트 조건을 직접 구성해서 유효한 세트 1개를 생성
     shapes = {'square', 'circle', 'triangle'};
     colors = {'red', 'yellow', 'blue'};
     patterns = {'shade', 'empty', 'filled'};
-    
-    % 속성 리스트
     attrs = {shapes, colors, patterns};
-    set_cards = struct('shape', '', 'color', '', 'pattern', '');
 
-    % 속성별로 '같음'(1) or '다름'(0)을 랜덤 선택
-    same_flags = randi([0, 1], 1, 3);
+    all_cards = generate_all_cards();  % 전체 카드 풀
+    raw_set = struct('shape', {}, 'color', {}, 'pattern', {});
 
-    for attr_idx = 1:3
-        options = attrs{attr_idx};
-        if same_flags(attr_idx) == 1
-            % 3개 속성이 모두 같도록
-            val = options{randi(3)};
-            for k = 1:3
-                set_cards(k).(get_attr_name(attr_idx)) = val;
-            end
-        else
-            % 3개 속성이 모두 다르도록 (shuffle)
-            shuffled = options(randperm(3));
-            for k = 1:3
-                set_cards(k).(get_attr_name(attr_idx)) = shuffled{k};
+    while true
+        same_flags = randi([0, 1], 1, 3);
+        if sum(same_flags) == 3
+            continue;  % 완전 동일한 3장은 패스
+        end
+
+        % 속성 조합대로 3장 생성
+        for attr_idx = 1:3
+            options = attrs{attr_idx};
+            field = get_attr_name(attr_idx);
+            if same_flags(attr_idx) == 1
+                val = options{randi(3)};
+                for k = 1:3
+                    raw_set(k).(field) = val;
+                end
+            else
+                vals = options(randperm(3));
+                for k = 1:3
+                    raw_set(k).(field) = vals{k};
+                end
             end
         end
+
+        % 반드시 all_cards 안에서 매칭된 인스턴스로 대체
+        set_cards = struct('shape', {}, 'color', {}, 'pattern', {});
+
+        for k = 1:3
+            mask = ismember_structs(all_cards, raw_set(k));
+            idx = find(mask, 1);
+            if isempty(idx)
+                error('카드 %d가 all_cards에 없음', k);
+            end
+            set_cards(k) = all_cards(idx);
+        end
+
+        return;
     end
 end
 
 function name = get_attr_name(i)
-    % 속성 인덱스를 이름으로 변환
     switch i
-        case 1
-            name = 'shape';
-        case 2
-            name = 'color';
-        case 3
-            name = 'pattern';
+        case 1, name = 'shape';
+        case 2, name = 'color';
+        case 3, name = 'pattern';
     end
 end
