@@ -1,10 +1,10 @@
 function board = generate_board_by_sampling_only_one_set()
-    max_attempts = 10000;  % 후보 샘플링 최대 시도 횟수
+    max_attempts = 100000;  % 후보 샘플링 최대 시도 횟수
 
     while true
         % 1. 유효한 세트 3장 생성
         set_cards = generate_structured_valid_set();
-        
+
         fprintf('\n[SET 생성]\n');
         for i = 1:3
             fprintf('  카드%d: %s-%s-%s\n', i, ...
@@ -51,6 +51,8 @@ function board = generate_board_by_sampling_only_one_set()
         end
 
         % 9장을 max_attempts 내에 못 찾으면 세트부터 새로
-        fprintf('[RESET] %d회 시도 실패. 세트 새로 뽑습니다.\n', max_attempts);
+        % fprintf('[RESET] %d회 시도 실패. 세트 새로 뽑습니다.\n', max_attempts);
+        fprintf('못 찾겠어요');
+        return;
     end
 end
