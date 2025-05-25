@@ -16,3 +16,6 @@ function valid = is_valid_set(card1, card2, card3)
         end
     end
 end
+
+
+% 검증 완료 
