@@ -57,8 +57,82 @@
 
 
 %% 
+% function board = generate_board_with_one_set()
+%     max_attempts = 1000;  % 9장 구성 시도 횟수 제한
+% 
+%     while true
+%         % 1. 세트 3장 생성 (고정)
+%         set_cards = generate_structured_valid_set();
+%         fprintf('[SET 생성]\n');
+%         for i = 1:3
+%             fprintf('  카드%d: %s-%s-%s\n', i, ...
+%                 set_cards(i).shape, set_cards(i).color, set_cards(i).pattern);
+%         end
+% 
+%         % 2. 전체 카드 목록에서 세트 제외
+%         all_cards = generate_all_cards();
+%         used_mask = ismember_structs(all_cards, set_cards);
+%         candidates_all = all_cards(~used_mask);
+% 
+%         % ✨ 세트 고정 후 여러 번 시도
+%         for attempt = 1:max_attempts
+%             fprintf('[TRY #%d] 9장 구성 시도 중...\n', attempt);
+%             board = set_cards;
+% 
+%             % 후보 카드 danger score 초기 계산
+%             for i = 1:length(candidates_all)
+%                 candidates_all(i).score = compute_danger_score(candidates_all(i), board);
+%             end
+% 
+%             % 무작위 섞은 뒤 위험도 순으로 정렬
+%             idx_shuffle = randperm(length(candidates_all));
+%             candidates = candidates_all(idx_shuffle);
+%             [~, idx_sorted] = sort([candidates.score]);
+%             candidates = candidates(idx_sorted);
+% 
+%             % 1장씩 추가하면서 danger score 동적 갱신
+%             i = 1;
+%             while length(board) < 12 && i <= length(candidates)
+%                 candidate = candidates(i);
+%                 if ~would_create_set(candidate, board)
+%                     % 카드 추가
+%                     candidate_clean = rmfield(candidate, 'score');
+%                     board(end+1) = candidate_clean;
+%                     fprintf('[ADD] %d번째 카드 추가됨: %s-%s-%s\n', ...
+%                         length(board), candidate_clean.shape, ...
+%                         candidate_clean.color, candidate_clean.pattern);
+% 
+%                     % 남은 후보 danger score 갱신
+%                     for j = i+1:length(candidates)
+%                         if ~ismember_structs(candidates(j), board)
+%                             candidates(j).score = compute_danger_score(candidates(j), board);
+%                         end
+%                     end
+%                     % 재정렬
+%                     remaining = candidates(i+1:end);
+%                     [~, idx_sorted] = sort([remaining.score]);
+%                     candidates(i+1:end) = remaining(idx_sorted);
+%                 end
+%                 i = i + 1;
+%             end
+% 
+%             if length(board) == 12
+%                 fprintf('[DONE] 보드 완성 🎉\n');
+%                 return;
+%             else
+%                 fprintf('[RETRY] 실패, 세트 유지하고 재시도...\n');
+%             end
+%         end
+% 
+%         % 1000번 시도해도 안 되면 세트 바꿔서 다시
+%         fprintf('[RESET] 1000회 시도 실패. 세트 새로 뽑습니다.\n');
+%     end
+% end
+%%
+% top k sampling added
 function board = generate_board_with_one_set()
-    max_attempts = 1000;  % 9장 구성 시도 횟수 제한
+    max_attempts = 100000;  % 9장 구성 시도 횟수 제한
+    top_k = 8;            % danger score 낮은 상위 K개 중 무작위 선택
 
     while true
         % 1. 세트 3장 생성 (고정)
@@ -72,11 +146,11 @@ function board = generate_board_with_one_set()
         % 2. 전체 카드 목록에서 세트 제외
         all_cards = generate_all_cards();
         used_mask = ismember_structs(all_cards, set_cards);
-        candidates_all = all_cards(~used_mask);
+        candidates_all = all_cards(~used_mask); % 여기까지 잘 들어감
 
         % ✨ 세트 고정 후 여러 번 시도
         for attempt = 1:max_attempts
-            fprintf('[TRY #%d] 9장 구성 시도 중...\n', attempt);
+            fprintf('[TRY #%d] 12장 구성 시도 중...\n', attempt);
             board = set_cards;
 
             % 후보 카드 danger score 초기 계산
@@ -84,36 +158,50 @@ function board = generate_board_with_one_set()
                 candidates_all(i).score = compute_danger_score(candidates_all(i), board);
             end
 
-            % 무작위 섞은 뒤 위험도 순으로 정렬
+            % 무작위 섞은 뒤 위험도 순 정렬
             idx_shuffle = randperm(length(candidates_all));
             candidates = candidates_all(idx_shuffle);
             [~, idx_sorted] = sort([candidates.score]);
             candidates = candidates(idx_sorted);
 
-            % 1장씩 추가하면서 danger score 동적 갱신
             i = 1;
             while length(board) < 12 && i <= length(candidates)
-                candidate = candidates(i);
+
+                % Top-K 후보 추출
+                remaining = candidates(i:end);
+                k_limit = min(top_k, length(remaining));
+                top_k_candidates = remaining(1:k_limit);
+
+                % 랜덤하게 하나 선택
+                pick_idx = randi(k_limit);
+                candidate = top_k_candidates(pick_idx);
+
                 if ~would_create_set(candidate, board)
-                    % 카드 추가
                     candidate_clean = rmfield(candidate, 'score');
                     board(end+1) = candidate_clean;
+
                     fprintf('[ADD] %d번째 카드 추가됨: %s-%s-%s\n', ...
                         length(board), candidate_clean.shape, ...
                         candidate_clean.color, candidate_clean.pattern);
 
-                    % 남은 후보 danger score 갱신
-                    for j = i+1:length(candidates)
+
+                    % ✨ 후보 리스트에서 중복 카드 제거 (ismember_structs 사용)
+                    is_same = ismember_structs(candidates, candidate_clean);
+                    candidates = candidates(~is_same);
+
+                    % danger score 갱신
+                    for j = 1:length(candidates)
                         if ~ismember_structs(candidates(j), board)
                             candidates(j).score = compute_danger_score(candidates(j), board);
                         end
                     end
                     % 재정렬
-                    remaining = candidates(i+1:end);
-                    [~, idx_sorted] = sort([remaining.score]);
-                    candidates(i+1:end) = remaining(idx_sorted);
+                    [~, idx_sorted] = sort([candidates.score]);
+                    candidates = candidates(idx_sorted);
+                    i = 1;  % 다시 앞에서부터 탐색
+                else
+                    i = i + 1;  % 다음 후보군 탐색
                 end
-                i = i + 1;
             end
 
             if length(board) == 12
@@ -128,3 +216,4 @@ function board = generate_board_with_one_set()
         fprintf('[RESET] 1000회 시도 실패. 세트 새로 뽑습니다.\n');
     end
 end
+
