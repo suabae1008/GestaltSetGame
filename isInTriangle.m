@@ -11,5 +11,5 @@ function inside = isInTriangle(dots, coordinate1, coordinate2, coordinate3)
     u = (dot11 .* dot02 - dot01 .* dot12) .* invDenom;
     v = (dot00 .* dot12 - dot01 .* dot02) .* invDenom;
     inside = (u >= 0) & (v >= 0) & (u + v <= 1);
-    inside = reshape(inside, 200, 200);
+    inside = reshape(inside, 100, 200);
 end
