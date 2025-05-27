@@ -1,23 +1,34 @@
 function all_cards = generate_all_cards()
-    % 3가지 속성 (모양, 색, 무늬)에 따라 가능한 27장의 카드 생성
-    shapes = {'square', 'circle', 'triangle'};
-    colors = {'red', 'yellow', 'blue'};
-    patterns = {'shade', 'empty', 'filled'};
-    
-    idx = 1;
-    for i = 1:3
-        for j = 1:3
-            for k = 1:3
-                % 각 속성 조합을 하나의 카드로 저장
-                all_cards(idx).shape = shapes{i};
-                all_cards(idx).color = colors{j};
-                all_cards(idx).pattern = patterns{k};
-                idx = idx + 1;
+    % 속성 이름과 값 정의
+    attr_names = {'shape', 'color', 'pattern', 'number'};
+    attr_values = {
+        {'square', 'circle', 'triangle'}, ...
+        {'red', 'yellow', 'blue'}, ...
+        {'shade', 'empty', 'filled'}, ...
+        {'one', 'two', 'three'}
+    };
+
+    % 가능한 조합 수 계산
+    num_attrs = numel(attr_names);
+    grid = cell(1, num_attrs);
+    [grid{:}] = ndgrid(attr_values{:});  % 속성별 모든 조합 생성
+    total = numel(grid{1});  % 전체 카드 수
+
+    % 카드 구조체 초기화
+    all_cards = repmat(struct(), total, 1);
+    for i = 1:total
+        for a = 1:num_attrs
+            all_cards(i).(attr_names{a}) = grid{a}(i);
+        end
+    end
+
+    % cell array 값 → 실제 문자열로 변환 (중첩 제거)
+    for i = 1:total
+        for a = 1:num_attrs
+            val = all_cards(i).(attr_names{a});
+            if iscell(val)
+                all_cards(i).(attr_names{a}) = val{1};
             end
         end
     end
 end
-
-
-
-% 검증 완료

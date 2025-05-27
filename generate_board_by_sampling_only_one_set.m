@@ -10,70 +10,70 @@
 
 % [VER1] 세트카드 (3개) 추출 - 남은 카드 중 랜덤하게 9개 뽑음 - 세트 개수 확인 - 1개가 아니면 9개 한꺼번에 폐기 - 다시 랜덤하게 9개 뽑음 로직입니다
 
-function board = generate_board_by_sampling_only_one_set()
-
-    max_attempts = 10;  % [최대 샘플링 횟수] 9개 카드 랜덤 추출 
-
-    while true
-
-        % 1. 유효한 세트 3장 생성
-        set_cards = generate_structured_valid_set();
-        
-        % 디버깅용: set cards 출력
-        fprintf('\n[SET 생성]\n');
-        for i = 1:3
-            fprintf('  카드%d: %s-%s-%s\n', i, ...
-                set_cards(i).shape, set_cards(i).color, set_cards(i).pattern);
-        end
-
-        % 2. 전체 카드 중 세트 3장 제거 - 후보 카드 생성
-        all_cards = generate_all_cards();
-        used_mask = ismember_structs(all_cards, set_cards);
-
-        candidates = all_cards(~used_mask);
-
-        % 3. 9장 무작위 샘플링 시도
-        for attempt = 1:max_attempts
-
-            fprintf('==========Attempt %d===========\n', attempt);
-
-            % 랜덤하게 인덱스 9개 뽑아서, 세트카드랑 합해 12개 보드 구성
-            sample_idx = randperm(length(candidates), 9);
-            board = [set_cards, candidates(sample_idx)];
-
-            % 세트 개수 확인
-            set_count = count_sets(board);
-
-            % 디버깅용: 세트 개수 확인 및 보드 카드 목록 출력
-            fprintf('[CHECK] 시도 #%d → 세트 개수: %d\n', attempt, set_count);
-            fprintf('\n[📋 전체 보드 카드 목록]\n');
-            for i = 1:length(board)
-                fprintf('%2d: %s-%s-%s\n', i, ...
-                    board(i).shape, board(i).color, board(i).pattern);
-            end
-            
-            % 세트 개수 1개면 종료
-            if set_count == 1
-                fprintf('[DONE] 보드 완성! 🎯 시도 #%d\n', attempt);
-
-                % 보드 출력
-                fprintf('\n[📋 완성된 보드 카드 목록]\n');
-                for i = 1:length(board)
-                    fprintf('%2d: %s-%s-%s\n', i, ...
-                        board(i).shape, board(i).color, board(i).pattern);
-                end
-
-                return;
-            end
-
-        end
-
-        % max attempts 초과
-        fprintf('못 찾겠어요');
-
-        return;
-    end
-end
+% function board = generate_board_by_sampling_only_one_set()
+% 
+%     max_attempts = 50;  % [최대 샘플링 횟수] 9개 카드 랜덤 추출 
+% 
+%     while true
+% 
+%         % 1. 유효한 세트 3장 생성
+%         set_cards = generate_structured_valid_set();
+%         
+%         % 디버깅용: set cards 출력
+%         fprintf('\n[SET 생성]\n');
+%         for i = 1:3
+%             fprintf('  카드%d: %s-%s-%s\n', i, ...
+%                 set_cards(i).shape, set_cards(i).color, set_cards(i).pattern);
+%         end
+% 
+%         % 2. 전체 카드 중 세트 3장 제거 - 후보 카드 생성
+%         all_cards = generate_all_cards();
+%         used_mask = ismember_structs(all_cards, set_cards);
+% 
+%         candidates = all_cards(~used_mask);
+% 
+%         % 3. 9장 무작위 샘플링 시도
+%         for attempt = 1:max_attempts
+% 
+%             fprintf('==========Attempt %d===========\n', attempt);
+% 
+%             % 랜덤하게 인덱스 9개 뽑아서, 세트카드랑 합해 12개 보드 구성
+%             sample_idx = randperm(length(candidates), 9);
+%             board = [set_cards, candidates(sample_idx)];
+% 
+%             % 세트 개수 확인
+%             set_count = count_sets(board);
+% 
+%             % 디버깅용: 세트 개수 확인 및 보드 카드 목록 출력
+%             fprintf('[CHECK] 시도 #%d → 세트 개수: %d\n', attempt, set_count);
+%             fprintf('\n[📋 전체 보드 카드 목록]\n');
+%             for i = 1:length(board)
+%                 fprintf('%2d: %s-%s-%s\n', i, ...
+%                     board(i).shape, board(i).color, board(i).pattern);
+%             end
+%             
+%             % 세트 개수 1개면 종료
+%             if set_count == 1
+%                 fprintf('[DONE] 보드 완성! 🎯 시도 #%d\n', attempt);
+% 
+%                 % 보드 출력
+%                 fprintf('\n[📋 완성된 보드 카드 목록]\n');
+%                 for i = 1:length(board)
+%                     fprintf('%2d: %s-%s-%s\n', i, ...
+%                         board(i).shape, board(i).color, board(i).pattern);
+%                 end
+% 
+%                 return;
+%             end
+% 
+%         end
+% 
+%         % max attempts 초과
+%         fprintf('못 찾겠어요');
+% 
+%         return;
+%     end
+% end
 %% 
 % [VER2] 세트카드 (3개) 추출 - 남은 카드 중 랜덤하게 9개 뽑음 - 세트 개수 확인 
 % - 1개가 아니면 카드 교체 시작
@@ -81,33 +81,33 @@ end
 
 
 
-function board = generate_board_by_sampling_only_one_set()
+function board = generate_board_by_sampling_only_one_set(set_cards)
 
     max_attempts = 10;  % 9개 추가 후보 샘플링 최대 시도 횟수
 
     while true
 
         % 1. 유효한 세트 3장 생성
-        set_cards = generate_structured_valid_set();
+        % set_cards = generate_structured_valid_set();
 
         % 디버깅용 출력
         fprintf('\n[SET 생성]\n');
         for i = 1:3
-            fprintf('  카드%d: %s-%s-%s\n', i, ...
-                set_cards(i).shape, set_cards(i).color, set_cards(i).pattern);
+            fprintf('  카드%d: %s-%s-%s-%s\n', i, ...
+                set_cards(i).shape, set_cards(i).color, set_cards(i).pattern, set_cards(i).number);
         end
 
         % 2. 전체 카드 중 세트 3장 제거
         all_cards = generate_all_cards();
         used_mask = ismember_structs(all_cards, set_cards);
 
-        candidates = all_cards(~used_mask);
+        candidates = all_cards(~used_mask); % working
 
         % 3. 9장 무작위 샘플링 시도
         for attempt = 1:max_attempts
 
             sample_idx = randperm(length(candidates), 9);
-            board = [set_cards, candidates(sample_idx)];
+            board = [set_cards, candidates(sample_idx).'];
 
             % 4. 세트 개수 확인
             [set_count, set_indices] = count_sets_with_indices(board);
@@ -135,7 +135,7 @@ function board = generate_board_by_sampling_only_one_set()
             fixed_indices = 1:3;
             
             % 최대 교체 횟수 제한 (무한 루프 방지용)
-            max_swaps = 20;
+            max_swaps = 10;
             swap_count = 0;
             
             while set_count > 1 && swap_count < max_swaps
@@ -204,10 +204,10 @@ function board = generate_board_by_sampling_only_one_set()
                     fprintf('[DONE] 보드 완성! 🎯 시도 #%d\n', attempt);
     
                     % 보드 출력
-                    fprintf('\n[📋 보드 카드 목록]\n');
+                    fprintf('\n[📋 완성된 보드 카드 목록]\n');
                     for i = 1:length(board)
-                        fprintf('%2d: %s-%s-%s\n', i, ...
-                            board(i).shape, board(i).color, board(i).pattern);
+                        fprintf('%2d: %s-%s-%s-%s\n', i, ...
+                            board(i).shape, board(i).color, board(i).pattern, board(i).number);
                     end
                     return;
                 end
