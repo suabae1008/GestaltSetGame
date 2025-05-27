@@ -1,4 +1,4 @@
-function main()
+function exmain()
     Screen('Preference','SkipSyncTests', 1);
     [windowPtr, rect] = Screen('OpenWindow', 0, [150 150 150], [0 0 2560 1600]);
     InitializePsychSound(1);
