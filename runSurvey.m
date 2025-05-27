@@ -19,22 +19,28 @@ function runSurvey()
     inputTypes = {'text', 'key', 'key', 'key', 'key'};
     validKeys = {{}, {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
     labels = {{}, {'Male','Female'}, {'Yes','No'}, {}, {}};
+    labels_confirm = {{},{'Male','Female'}, {'Yes','No'},...
+        {'Never', 'Sometimes', 'Normal', 'Often', 'Very Often'},...
+        {'Scan whole picture', 'Check each part'}};
 
     responses = cell(length(questions), 1);
+    responses_confirm = cell(length(questions),1);
 
     % 질문 루프
     for q = 1:length(questions)
         if strcmp(inputTypes{q}, 'text')
             responses{q} = getTextInput(w, rect, questions{q});
+            responses_confirm{q} = getTextInput(w, rect, questions{q});
         else
             responses{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels{q});
+            responses_confirm{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels_confirm{q});
         end
     end
 
     % 확인 및 재입력
     confirmText = 'Please confirm your responses:\n\n';
     for i = 1:length(questions)
-        confirmText = [confirmText, sprintf('Q%d: %s\n', i, responses{i})];
+        confirmText = [confirmText, sprintf('Q%d: %s\n', i, responses_confirm{i})];
     end
     confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 
@@ -45,7 +51,8 @@ function runSurvey()
         KbWait;
         [~,~,kc] = KbCheck;
         key = KbName(find(kc));
-        if iscell(key), key = key{1}; end
+        if iscell(key), key = key{1}; 
+        end
         if strcmpi(key, 'Y')
             break;
         elseif strcmpi(key, 'N')
@@ -55,24 +62,23 @@ function runSurvey()
         end
     end
 
-    % 구조체로 저장
-    survey.age = responses{1};
-    survey.gender = responses{2};
-    survey.setPlayed = responses{3};
-    survey.puzzleFreq = responses{4};
-    survey.visualStrategy = responses{5};
+    % 저장
+    resultFile = fopen('survey_result.txt', 'w');
+    fprintf(resultFile, '==== Survey Result ====\n\n');
+    disp('==== Survey Result ====');
+    for i = 1:length(questions)
+        fprintf('Q%d: %s\n', i, responses{i});
+        fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
+    end
+    fclose(resultFile);
 
-    save('surveyResult.mat', 'survey');
     Screen('CloseAll');
-    disp('Survey saved to surveyResult.mat');
-    disp(survey);
+    disp('Saved to survey_result.txt');
 end
 
-%% 입력 함수: 서술형 텍스트 입력
 function inputText = getTextInput(w, rect, prompt)
     inputText = '';
     while true
-        % 입력화면 그리기
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
         DrawFormattedText(w, ['> ' inputText], 'center', rect(4)*0.5, [0 0 0]);
@@ -93,24 +99,38 @@ function inputText = getTextInput(w, rect, prompt)
     end
 end
 
-%% 입력 함수: 키보드 단일키 입력
 function result = getKeyInput(w, rect, prompt, validKeys, labels)
     while true
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', 'center', [0 0 0]);
         Screen('Flip', w);
-        KbWait;
-        [~,~,kc] = KbCheck;
-        key = KbName(find(kc));
-        if iscell(key), key = key{1}; end
-        key = upper(key);
+
+        key = '';
+        while isempty(key)
+            [keyIsDown, ~, keyCode] = KbCheck;
+            if keyIsDown
+                pressed = KbName(find(keyCode));
+                if iscell(pressed)
+                    key = upper(pressed{1});
+                else
+                    key = upper(pressed);
+                end
+            end
+        end
+
+        % 키 정규화: 숫자 키패드 대응
+        if startsWith(key, 'KP_')
+            key = extractAfter(key, 'KP_');
+        elseif length(key) > 1 && key(end) == '!'
+            key = key(1); % '1!' -> '1'
+        end
 
         if isempty(validKeys) || any(strcmpi(key, validKeys))
-            if isempty(labels)
-                result = key;
-            else
-                idx = find(strcmpi(key, validKeys));
+            idx = find(strcmpi(key, validKeys), 1);
+            if ~isempty(labels)
                 result = labels{idx};
+            else
+                result = key;
             end
             break;
         end
