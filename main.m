@@ -6,9 +6,12 @@ function main()
     generateCard(windowPtr,'circle', 'red', 'stripe', [900 600]);
     generateCard(windowPtr,'rectangle', 'blue', 'frame', [1600 700]);
 
-    Screen('Flip', windowPtr);
+    StartTime = Screen('Flip', windowPtr);
 
-    [RT, error] = CheckMouseClicks([1280 800], [900 600], [1600 700]);
+    [EndTime, error] = CheckMouseClicks([1280 800], [900 600], [1600 700]);
+
+    RT = EndTime - StartTime;
+
     disp(RT)
     disp(error)
 
