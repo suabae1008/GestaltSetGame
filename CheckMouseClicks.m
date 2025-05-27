@@ -1,5 +1,4 @@
-function [RT, error] = CheckMouseClicks(ans1, ans2, ans3)
-tic;
+function [EndTime, error] = CheckMouseClicks(ans1, ans2, ans3)
 error = 0;
 
 cardWidth = 150;
@@ -44,7 +43,7 @@ while true
     allInside = all(targetInside);
 
     if allInside == true
-        RT = toc;
+        EndTime = GetSecs();
         freq1 = 880;  
         freq2 = 1760; 
         
