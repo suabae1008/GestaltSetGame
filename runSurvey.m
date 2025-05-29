@@ -11,7 +11,7 @@ function runSurvey()
         '2. What is your gender? (Press M for Male / F for Female)', ...
         '3. Have you played SET game before? (Y/N)', ...
         '4. How often do you play puzzle games? (1:Never ~ 5:Very often)', ...
-        ['5. What is your visual strategy?\n\n'  newline ...
+        ['5. What is your visual strategy?\n'  newline ...
          '   1. I quickly scan the whole picture' newline ...
          '   2. I sequentially check each part']
     };
@@ -30,11 +30,12 @@ function runSurvey()
     for q = 1:length(questions)
         if strcmp(inputTypes{q}, 'text')
             responses{q} = getTextInput(w, rect, questions{q});
-            responses_confirm{q} = getTextInput(w, rect, questions{q});
+            responses_confirm{q} = responses{q}; 
         else
             responses{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels{q});
             responses_confirm{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels_confirm{q});
         end
+
     end
 
     % 확인 및 재입력
@@ -67,7 +68,7 @@ function runSurvey()
     fprintf(resultFile, '==== Survey Result ====\n\n');
     disp('==== Survey Result ====');
     for i = 1:length(questions)
-        fprintf('Q%d: %s\n', i, responses{i});
+        fprintf('Q%d: %s\n', i, responses_confirm {i});
         fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
     end
     fclose(resultFile);
@@ -78,38 +79,64 @@ end
 
 function inputText = getTextInput(w, rect, prompt)
     inputText = '';
+    KbName('UnifyKeyNames');
     while true
+        % 입력 화면 갱신
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
-        DrawFormattedText(w, ['> ' inputText], 'center', rect(4)*0.5, [0 0 0]);
+        DrawFormattedText(w, ['>> ' inputText], 'center', rect(4)*0.5, [0 0 0]);
         Screen('Flip', w);
 
-        ch = GetChar;
-        if ch == 13 || ch == 3  % Enter
-            if ~isempty(str2double(inputText)) && ~isnan(str2double(inputText))
+        % 키 입력 대기
+        while true
+            [keyIsDown, ~, keyCode] = KbCheck;
+            if keyIsDown
+                key = KbName(find(keyCode,1));
+                if iscell(key), key = key{1};
+                end
                 break;
             end
-        elseif ch == 8 || ch == 127  % Backspace
+        end
+
+        % 키패드 숫자 대응
+        if startsWith(key, 'KP_')
+            key = extractAfter(key, 'KP_');
+        end
+
+        % 동작 처리
+        if strcmp(key, 'Return') || strcmp(key, 'Enter')
+            if ~isempty(inputText) && ~isnan(str2double(inputText))
+                break;
+            end
+        elseif strcmp(key, 'BackSpace')
             if ~isempty(inputText)
                 inputText(end) = [];
             end
-        elseif isstrprop(ch, 'digit')
-            inputText = [inputText ch];
+        elseif any(strcmp(key, {'0','1','2','3','4','5','6','7','8','9'}))
+            inputText = [inputText key];
         end
+        WaitSecs(0.2);  % 연속 입력 방지
     end
 end
 
 function result = getKeyInput(w, rect, prompt, validKeys, labels)
+    inputDisplay = '';
+    KbName('UnifyKeyNames');
+
     while true
+        % 질문 및 현재 입력 표시
         Screen('FillRect', w, [255 255 255]);
-        DrawFormattedText(w, prompt, 'center', 'center', [0 0 0]);
+        DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
+        if ~isempty(inputDisplay)
+            DrawFormattedText(w, ['> ' inputDisplay], 'center', rect(4)*0.5, [0 0 0]);
+        end
         Screen('Flip', w);
 
         key = '';
         while isempty(key)
             [keyIsDown, ~, keyCode] = KbCheck;
             if keyIsDown
-                pressed = KbName(find(keyCode));
+                pressed = KbName(find(keyCode,1));
                 if iscell(pressed)
                     key = upper(pressed{1});
                 else
@@ -118,21 +145,25 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
             end
         end
 
-        % 키 정규화: 숫자 키패드 대응
+        % 키패드 숫자 처리
         if startsWith(key, 'KP_')
             key = extractAfter(key, 'KP_');
-        elseif length(key) > 1 && key(end) == '!'
-            key = key(1); % '1!' -> '1'
+        elseif length(key) > 1 && ismember(key(2), '!@#$%^&*()')
+            key = key(1);
         end
 
+        inputDisplay = key;
+
+        % 유효성 검사 및 반환
         if isempty(validKeys) || any(strcmpi(key, validKeys))
             idx = find(strcmpi(key, validKeys), 1);
-            if ~isempty(labels)
+            if ~isempty(labels) && ~isempty(idx)
                 result = labels{idx};
             else
                 result = key;
             end
             break;
         end
+        WaitSecs(0.2);  % 연속 입력 방지
     end
 end
