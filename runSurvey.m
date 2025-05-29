@@ -4,6 +4,13 @@ function runSurvey()
     [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
     Screen('TextSize', w, 28);
     KbName('UnifyKeyNames');
+    
+    %설문 시작 안내
+    openingText = 'Please answer the survey with insturcted keys'
+    DrawFormattedText(w,openingText,'center','center', [0 0 0]);
+	Screen('Flip', w);
+	WaitSecs(3);
+    Screen('Flip', w);
 
     % 질문 및 입력 타입 설정
     questions = {
@@ -26,24 +33,28 @@ function runSurvey()
     responses = cell(length(questions), 1);
     responses_confirm = cell(length(questions),1);
 
-    % 질문 루프
-    for q = 1:length(questions)
-        if strcmp(inputTypes{q}, 'text')
-            responses{q} = getTextInput(w, rect, questions{q});
-            responses_confirm{q} = responses{q}; 
+    % 질문 답 루프
+ for q = 1:length(questions)
+    if strcmp(inputTypes{q}, 'text')
+        responses{q} = getTextInput(w, rect, questions{q});
+        responses_confirm{q} = responses{q}; 
+    else
+        responses{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels{q});
+        idx = find(strcmpi(responses{q}, validKeys{q}), 1);
+        if ~isempty(idx) && ~isempty(labels_confirm{q})
+            responses_confirm{q} = labels_confirm{q}{idx};  % 확인용 label로 저장
         else
-            responses{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels{q});
-            responses_confirm{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels_confirm{q});
+            responses_confirm{q} = responses{q};  % fallback
         end
-
     end
+end
 
-    % 확인 및 재입력
-    confirmText = 'Please confirm your responses:\n\n';
-    for i = 1:length(questions)
-        confirmText = [confirmText, sprintf('Q%d: %s\n', i, responses_confirm{i})];
-    end
-    confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
+% 확인 및 재입력 텍스트 구성
+confirmText = 'Please confirm your responses:\n\n';
+for i = 1:length(questions)
+    confirmText = [confirmText, sprintf('Q%d: %s\n', i, responses_confirm{i})];
+end
+confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 
     while true
         Screen('FillRect', w, [255 255 255]);
@@ -72,14 +83,21 @@ function runSurvey()
         fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
     end
     fclose(resultFile);
-
+    
+    % 설문 완료 메세지 
+    closingText = 'Thank you for your answers. Test will be begin'
+    DrawFormattedText(w,closingText,'center','center', [0 0 0]);
+	Screen('Flip', w);
+	WaitSecs(2);
     Screen('CloseAll');
     disp('Saved to survey_result.txt');
 end
 
+%1번 문항 input
 function inputText = getTextInput(w, rect, prompt)
     inputText = '';
     KbName('UnifyKeyNames');
+    
     while true
         % 입력 화면 갱신
         Screen('FillRect', w, [255 255 255]);
@@ -92,13 +110,13 @@ function inputText = getTextInput(w, rect, prompt)
             [keyIsDown, ~, keyCode] = KbCheck;
             if keyIsDown
                 key = KbName(find(keyCode,1));
-                if iscell(key), key = key{1};
-                end
+                if iscell(key), key = key{1}; end
                 break;
             end
         end
+        while KbCheck; end
 
-        % 키패드 숫자 대응
+        % 키패드 숫자 처리
         if startsWith(key, 'KP_')
             key = extractAfter(key, 'KP_');
         end
@@ -115,55 +133,66 @@ function inputText = getTextInput(w, rect, prompt)
         elseif any(strcmp(key, {'0','1','2','3','4','5','6','7','8','9'}))
             inputText = [inputText key];
         end
-        WaitSecs(0.2);  % 연속 입력 방지
     end
 end
 
+%2~5번문항 input
 function result = getKeyInput(w, rect, prompt, validKeys, labels)
     inputDisplay = '';
+    inputKey = '';
+    confirmed = false;
+
     KbName('UnifyKeyNames');
 
-    while true
-        % 질문 및 현재 입력 표시
+    while ~confirmed
+        % 화면 표시
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
-        if ~isempty(inputDisplay)
-            DrawFormattedText(w, ['> ' inputDisplay], 'center', rect(4)*0.5, [0 0 0]);
-        end
+        DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.6, [0 0 0]);
         Screen('Flip', w);
 
+        % 키 입력 대기
         key = '';
         while isempty(key)
             [keyIsDown, ~, keyCode] = KbCheck;
             if keyIsDown
-                pressed = KbName(find(keyCode,1));
-                if iscell(pressed)
-                    key = upper(pressed{1});
-                else
-                    key = upper(pressed);
+                key = KbName(find(keyCode,1));
+                if iscell(key)
+                    key = key{1};
                 end
+                key = upper(key);
+                while KbCheck; end  % 키가 놓일 때까지 대기
             end
         end
 
         % 키패드 숫자 처리
         if startsWith(key, 'KP_')
             key = extractAfter(key, 'KP_');
-        elseif length(key) > 1 && ismember(key(2), '!@#$%^&*()')
-            key = key(1);
         end
 
-        inputDisplay = key;
-
-        % 유효성 검사 및 반환
-        if isempty(validKeys) || any(strcmpi(key, validKeys))
-            idx = find(strcmpi(key, validKeys), 1);
-            if ~isempty(labels) && ~isempty(idx)
-                result = labels{idx};
-            else
-                result = key;
+        % 동작 분기
+        if strcmp(key, 'RETURN') || strcmp(key, 'ENTER')
+            % Enter 키 입력 → 이전에 입력된 키를 확정
+            if ~isempty(inputKey)
+                if isempty(validKeys) || any(strcmpi(inputKey, validKeys))
+                    idx = find(strcmpi(inputKey, validKeys), 1);
+                    if ~isempty(labels) && ~isempty(idx)
+                        result = labels{idx};
+                    else
+                        result = inputKey;
+                    end
+                    confirmed = true;
+                end
             end
-            break;
+        elseif strcmp(key, 'BACKSPACE')
+            inputKey = '';
+            inputDisplay = '';
+        elseif isempty(validKeys) || any(strcmpi(key, validKeys))
+            % 유효 키 입력 → 화면에 표시만 (아직 확정 아님)
+            inputKey = key;
+            inputDisplay = key;
         end
-        WaitSecs(0.2);  % 연속 입력 방지
+
+        WaitSecs(0.15);  % 연속 입력 방지
     end
 end
