@@ -1,4 +1,4 @@
-function runSurvey(w, rect)
+function responses = runSurvey(w, rect)
     % Psychtoolbox 초기화
     Screen('Preference', 'SkipSyncTests', 2);
     [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
@@ -6,7 +6,7 @@ function runSurvey(w, rect)
     KbName('UnifyKeyNames');
     
     %설문 시작 안내
-    openingText = ['Survey will start soon.\n Please use the keypad and Enter to answer the questions'];
+    openingText = 'Survey will start soon.\n Please use the keypad and Enter to answer the questions';
     DrawFormattedText(w,openingText,'center','center', [0 0 0]);
 	Screen('Flip', w);
 	WaitSecs(4);
@@ -35,7 +35,7 @@ function runSurvey(w, rect)
 
     inputTypes = {'key', 'text', 'key', 'key', 'key', 'key'};
     validKeys = {{'C','1','2','3'}, {}, {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
-    question_label = {{'  Group : '},{'   1. Age : '}, {'   2. Gender : '}, {'   3. SET experience : '},...
+    question_label = {{'  Group : '},{'   1. Age : '}, {'   2. Gender : '}, {'   3. Played SET : '},...
         {'   4. Playing Puzzles : '}, {'   5. Visual strategy :'}};
     labels = {{}, {}, {'Male','Female'}, {'Yes','No'}, {}, {}};
     labels_confirm = {{},{},{'Male','Female'}, {'Yes','No'},...
@@ -91,14 +91,14 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     end
 
     % 저장
-    resultFile = fopen('survey_result.txt', 'w');
-    fprintf(resultFile, '==== Survey Result ====\n\n');
+    % resultFile = fopen('survey_result.txt', 'w');
+    % fprintf(resultFile, '==== Survey Result ====\n\n');
     disp('==== Survey Result ====');
     for i = 1:length(questions)
         fprintf('Q%d: %s\n', i, responses_confirm {i});
-        fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
+        %fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
     end
-    fclose(resultFile);
+    % fclose(resultFile);
     
     % 설문 완료 메세지 
     closingText = 'Thank you for your answers. Test will be begin';
@@ -106,7 +106,9 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 	Screen('Flip', w);
 	WaitSecs(2);
     Screen('CloseAll');
-    disp('Saved to survey_result.txt');
+    ListenChar(0); % 키보드 제어 복원
+    ShowCursor;    % 마우스 커서 복원
+    %disp('Saved to survey_result.txt');
 end
 
 %1번 문항 input
