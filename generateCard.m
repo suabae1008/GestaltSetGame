@@ -32,9 +32,9 @@ function generateCard(screen, shape, color, pattern, num, position)
         case 1
             NumShapePos = [position(1), position(2), position(1), position(2)];
         case 2
-            NumShapePos = [position(1), position(2)+80; position(1), position(2)-80];
+            NumShapePos = [position(1), position(2)+50; position(1), position(2)-50];
         case 3
-            NumShapePos = [position(1), position(2)+120; position(1), position(2);position(1), position(2)-120;];
+            NumShapePos = [position(1), position(2)+100; position(1), position(2);position(1), position(2)-100;];
     end
 
     % 도형 그리기
