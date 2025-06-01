@@ -20,10 +20,14 @@ function main()
             card = card_set(j);
             final_cases_for_test{trialIdx,j} = {card.shape, card.color, card.pattern, numMap(card.number)};
         end
+        % 1~3번 카드 = 정답
         correctCards = final_cases_for_test(trialIdx, 1:3);
+        % 4~12번 카드 = 오답
         wrongCards = final_cases_for_test(trialIdx, 4:12);
+        % 정답 + 오답 합치기 (총 12장)
         allCards = [correctCards, wrongCards];
 
+        % 무작위 순서 생성
         shuffledIdx = randperm(12);
         shuffledCards = allCards(shuffledIdx);
 
