@@ -1,5 +1,5 @@
 function main()
-    Screen('Preference','SkipSyncTests', 2);
+    Screen('Preference','SkipSyncTests', 1);
     [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 2560 1600]);
     InitializePsychSound(1);
 %
@@ -19,13 +19,16 @@ function main()
     [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
     positions = [xGrid(:), yGrid(:)];
     
+    %Trial 수 지정
+    trialNum = 3;
+
     %실험 초기화
-    RTs = zeros(1, 3);
-    errors = zeros(1, 3);
-    trialData(3) = struct();
+    RTs = zeros(1, trialNum);
+    errors = zeros(1, trialNum);
+    trialData(trialNum) = struct();
 
     % 모든 문제 반복
-    for trialIdx = 1:3
+    for trialIdx = 1:trialNum
         card_set = problems(trialIdx).cards;
         for j = 1:12
             card = card_set(j);
