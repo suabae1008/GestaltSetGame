@@ -22,7 +22,7 @@ function generateCard(screen, shape, color, pattern, num, position)
         case 'red'
             color = [255 0 0];
         case 'yellow'
-            color = [255 255 0];
+            color = [0 200 0];
         case 'blue'
             color = [0 0 255];
     end
@@ -40,6 +40,7 @@ function generateCard(screen, shape, color, pattern, num, position)
     % 도형 그리기
     shapeWidth = 80;
     shapeHeight = 30;
+    frameWidth = 7;
 
 
     %shapePosition = [position(1)-shapeWidth, position(2)-shapeHeight, position(1)+shapeWidth, position(2)+shapeHeight];
@@ -51,7 +52,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                 case 'empty'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
-                    Screen('FrameOval', screen, color, shapePosition, 5);
+                    Screen('FrameOval', screen, color, shapePosition, frameWidth);
                     end
                 case 'filled'
                     for i=1:num
@@ -70,7 +71,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('DrawTexture', screen, texture, [], shapePosition);
-                    Screen('FrameOval', screen, color, shapePosition, 5);
+                    Screen('FrameOval', screen, color, shapePosition, frameWidth);
                     end
                     
 
@@ -80,7 +81,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                 case 'empty'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
-                    Screen('FrameRect', screen, color, shapePosition, 5);
+                    Screen('FrameRect', screen, color, shapePosition, frameWidth);
                     end
                 case 'filled'
                     for i=1:num
@@ -94,7 +95,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('DrawTexture', screen, texture, [], shapePosition);
-                    Screen('FrameRect', screen, color, shapePosition, 5);
+                    Screen('FrameRect', screen, color, shapePosition, frameWidth);
                     end
             end
             
@@ -103,7 +104,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                 case 'empty'
                     for i=1:num
                     triPosition = [NumShapePos(i, 1), NumShapePos(i, 2)-shapeHeight; NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)+shapeHeight; NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
-                    Screen('FramePoly', screen, color, triPosition, 5);
+                    Screen('FramePoly', screen, color, triPosition, frameWidth);
                     end
                 case 'filled'
                     for i=1:num
@@ -124,7 +125,7 @@ function generateCard(screen, shape, color, pattern, num, position)
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];    
                     triPosition = [NumShapePos(i, 1), NumShapePos(i, 2)-shapeHeight; NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)+shapeHeight; NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('DrawTexture', screen, texture, [], shapePosition);
-                    Screen('FramePoly', screen, color, triPosition, 5);
+                    Screen('FramePoly', screen, color, triPosition, frameWidth);
                     end
                     
             end  
