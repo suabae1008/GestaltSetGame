@@ -4,7 +4,7 @@ function responses = runSurvey(windowPtr, rect);
     % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
     
     % Psychtoolbox 초기화
-    Screen('TextSize', windowPtr, 48);
+    Screen('TextSize', windowPtr, 42);
     KbName('UnifyKeyNames');
     
     %설문 시작 안내
@@ -105,7 +105,7 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     responses.gender = lower(responses_confirm{4});
     responses.SET_experience = strcmpi(responses_raw{5}, 'Y');
     responses.game_frequency = responses_confirm{6};
-    responses.strategy = responses_confirm{7};
+    responses.strategy = responses_raw{7};
     
     % 설문 완료 메세지 
     closingText = 'Thank you for your answers. Test will be begin';
