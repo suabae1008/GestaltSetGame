@@ -1,10 +1,13 @@
 function main()
     Screen('Preference','SkipSyncTests', 1);
-    [windowPtr, rect] = Screen('OpenWindow', 0, [150 150 150], [0 0 2560 1600]);
+    [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 2560 1600]);
     InitializePsychSound(1);
 
     %% 설문조사 실행
     responses = runSurvey(windowPtr, rect);
+    WaitSecs(2);
+    Screen('FillRect', windowPtr, [150 150 150], [0 0 2560 1600]);
+    Screen('Flip', windowPtr);
 
     %% 카드 조건 불러오기
     data = load('answersheet.mat');
@@ -15,6 +18,10 @@ function main()
     % 위치 지정 (3x4)
     [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
     positions = [xGrid(:), yGrid(:)];
+    
+    %결과 입력 생성
+    RTs = zeros(1, 10);
+    errors = zeros(1, 10);
 
     % 모든 문제 반복
     for trialIdx = 1:10
@@ -58,8 +65,9 @@ function main()
                                              positions(correctCardIndices(2),:), ...
                                              positions(correctCardIndices(3),:));
 
-        RT = EndTime - StartTime;
-        disp(['Trial ', num2str(trialIdx), ' - RT: ', num2str(RT), ', Error: ', num2str(error)]);
+        RTs(trialIdx) = EndTime - StartTime;
+        error(trialIdx) = error;
+        disp(['Trial ', num2str(trialIdx), ' - RT: ', num2str(RTs(trialIdx)), ', Error: ', num2str(error)]);
 
         % 키 누를 때까지 대기 후 다음 trial
         DrawFormattedText(windowPtr, 'Press any key for next trial', 'center', 'center', [0 0 0]);
@@ -70,5 +78,5 @@ function main()
     sca;
 
     %% 결과 저장
-    save('final_experiment_results.mat', 'responses', 'RT', 'error');
+    save('final_experiment_results.mat', 'responses', 'RTs', 'error');
 end
