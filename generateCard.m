@@ -11,8 +11,8 @@ ex) [1280 800] 입력시 카드는 [1130 600 1430 1000]에 그려짐
 
 function generateCard(screen, shape, color, pattern, num, position)
     % 카드 배경 만들기
-    cardWidth = 150;
-    cardHeight = 200;
+    cardWidth = 120;
+    cardHeight = 160;
     cardPosition = [position(1)-cardWidth, position(2)-cardHeight, position(1)+cardWidth, position(2)+cardHeight];
     Screen('FillRect', screen, [255 255 255], cardPosition);
     Screen('FrameRect', screen, [0 0 0], cardPosition, 3);
@@ -38,8 +38,8 @@ function generateCard(screen, shape, color, pattern, num, position)
     end
 
     % 도형 그리기
-    shapeWidth = 100;
-    shapeHeight = 50;
+    shapeWidth = 80;
+    shapeHeight = 30;
 
 
     %shapePosition = [position(1)-shapeWidth, position(2)-shapeHeight, position(1)+shapeWidth, position(2)+shapeHeight];
@@ -48,17 +48,17 @@ function generateCard(screen, shape, color, pattern, num, position)
     switch shape
         case 'circle'
             switch pattern
-                case 'frame'
+                case 'empty'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FrameOval', screen, color, shapePosition, 5);
                     end
-                case 'fill'
+                case 'filled'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FillOval', screen, color, shapePosition);
                     end
-                case 'stripe'
+                case 'shade'
                     [X, Y] = meshgrid(1:200, 1:100);
                     mask = ((X - 100)/100).^2 + ((Y - 50)/50).^2 <= 1;
                     img = generateStripe(screen, color);
@@ -75,19 +75,19 @@ function generateCard(screen, shape, color, pattern, num, position)
                     
 
             end
-        case 'rectangle'
+        case 'square'
             switch pattern
-                case 'frame'
+                case 'empty'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FrameRect', screen, color, shapePosition, 5);
                     end
-                case 'fill'
+                case 'filled'
                     for i=1:num
                     shapePosition = [NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)-shapeHeight, NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FillRect', screen, color, shapePosition);
                     end
-                case 'stripe'
+                case 'shade'
                     img = generateStripe(screen, color);
                     img = img(1:100, :, :);
                     texture = Screen('MakeTexture', screen, img);
@@ -100,17 +100,17 @@ function generateCard(screen, shape, color, pattern, num, position)
             
         case 'triangle'
             switch pattern
-                case 'frame'
+                case 'empty'
                     for i=1:num
                     triPosition = [NumShapePos(i, 1), NumShapePos(i, 2)-shapeHeight; NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)+shapeHeight; NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FramePoly', screen, color, triPosition, 5);
                     end
-                case 'fill'
+                case 'filled'
                     for i=1:num
                     triPosition = [NumShapePos(i, 1), NumShapePos(i, 2)-shapeHeight; NumShapePos(i, 1)-shapeWidth, NumShapePos(i, 2)+shapeHeight; NumShapePos(i, 1)+shapeWidth, NumShapePos(i, 2)+shapeHeight];
                     Screen('FillPoly', screen, color, triPosition);
                     end
-                case 'stripe'
+                case 'shade'
                     [X, Y] = meshgrid(1:200, 1:100);
                     points = [X(:), Y(:)];
                     mask = isInTriangle(points, [100 0], [0 100], [200 100]);
