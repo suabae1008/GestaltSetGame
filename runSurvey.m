@@ -1,6 +1,10 @@
-function responses = runSurvey(windowPtr, rect)
+function responses = runSurvey(windowPtr, rect);  
+    
+    % Screen('Preference','SkipSyncTests', 2);
+    % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
+    
     % Psychtoolbox 초기화
-    Screen('TextSize', windowPtr, 40);
+    Screen('TextSize', windowPtr, 48);
     KbName('UnifyKeyNames');
     
     %설문 시작 안내
@@ -12,11 +16,12 @@ function responses = runSurvey(windowPtr, rect)
 
     % 질문 및 입력 타입 설정
   questions = {
-    ['Information: Enter your group \n\n'...
+    ['Information -1: Enter your group \n\n'...
     '    Control group = c\n'...
     '    Group 1 = 1\n'...
     '    Group 2 = 2\n'...
     '    Group 3 = 3\n'], ...
+    'Information -2: Enter your number\n\n', ...
     '1. What is your age? (Type and press Enter)', ...
     '2. What is your gender? \n (M for Male / F for Female)', ...
     '3. Have you played SET game before? (Y/N)', ...
@@ -31,12 +36,12 @@ function responses = runSurvey(windowPtr, rect)
      '   2. I sequentially check each part']
 };
 
-    inputTypes = {'key', 'text', 'key', 'key', 'key', 'key'};
-    validKeys = {{'C','1','2','3'}, {}, {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
-    question_label = {{'  Group : '},{'   1. Age : '}, {'   2. Gender : '}, {'   3. Played SET : '},...
-        {'   4. Playing Puzzles : '}, {'   5. Visual strategy :'}};
-    labels = {{}, {}, {'Male','Female'}, {'Yes','No'}, {}, {}};
-    labels_confirm = {{},{},{'Male','Female'}, {'Yes','No'},...
+    inputTypes = {'key', 'text', 'text', 'key', 'key', 'key', 'key'};
+    validKeys = {{'C','1','2','3'}, {},{} {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
+    question_label = {{},{},{'1. Age : '}, {'2. Gender : '}, {'3. Played SET : '},...
+        {'4. Playing Puzzles : '}, {'5. Visual strategy :'}};
+    labels = {{}, {}, {}, {'Male','Female'}, {'Yes','No'}, {}, {}};
+    labels_confirm = {{},{},{},{'Male','Female'}, {'Yes','No'},...
         {'Never (less than once a month)', 
         'Rarely (2–3 times a month)', 
         'Sometimes (about once a week)', 
@@ -44,28 +49,28 @@ function responses = runSurvey(windowPtr, rect)
         'Very often (almost every day)'},...
         {'Scan whole picture', 'Check each part'}};
 
-    responses = cell(length(questions), 1);
+    responses_raw= cell(length(questions), 1);
     responses_confirm = cell(length(questions),1);
 
     % 질문 답 루프
  for q = 1:length(questions)
     if strcmp(inputTypes{q}, 'text')
-        responses{q} = getTextInput(windowPtr, rect, questions{q});
-        responses_confirm{q} = responses{q}; 
+        responses_raw{q} = getTextInput(windowPtr, rect, questions{q});
+        responses_confirm{q} = responses_raw{q}; 
     else
-        responses{q} = getKeyInput(windowPtr, rect, questions{q}, validKeys{q}, labels{q});
-        idx = find(strcmpi(responses{q}, validKeys{q}), 1);
+        responses_raw{q} = getKeyInput(windowPtr, rect, questions{q}, validKeys{q}, labels{q});
+        idx = find(strcmpi(responses_raw{q}, validKeys{q}), 1);
         if ~isempty(idx) && ~isempty(labels_confirm{q})
             responses_confirm{q} = labels_confirm{q}{idx};  % 확인용 label로 저장
         else
-            responses_confirm{q} = responses{q};  % fallback
+            responses_confirm{q} = responses_raw{q};  % fallback
         end
     end
 end
 
 % 확인 및 재입력 텍스트 구성
 confirmText = 'Please confirm your responses:\n\n';
-for i = 1:length(questions)
+for i = 3:length(questions)
     confirmText = [confirmText, sprintf('%s %s\n', question_label{i}{1}, responses_confirm{i})];
 end
 confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
@@ -87,15 +92,20 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
         end
     end
 
-    % 저장
-    % resultFile = fopen('survey_result.txt', 'w');
-    % fprintf(resultFile, '==== Survey Result ====\n\n');
+    % 저장 표시
     disp('==== Survey Result ====');
     for i = 1:length(questions)
         fprintf('Q%d: %s\n', i, responses_confirm {i});
-        %fprintf(resultFile, 'Q%d: %s\n', i, responses{i});
     end
-    % fclose(resultFile);
+    
+    responses = struct();
+    responses.group = responses_raw{1};
+    responses.subNum = responses_raw{2};
+    responses.age = str2double(responses_raw{3});
+    responses.gender = lower(responses_confirm{4});
+    responses.SET_experience = strcmpi(responses_raw{5}, 'Y');
+    responses.game_frequency = responses_confirm{6};
+    responses.strategy = responses_confirm{7};
     
     % 설문 완료 메세지 
     closingText = 'Thank you for your answers. Test will be begin';
@@ -104,10 +114,10 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 	WaitSecs(2);
     ListenChar(0); % 키보드 제어 복원
     ShowCursor;    % 마우스 커서 복원
-    %disp('Saved to survey_result.txt');
+    % sca;
 end
 
-%1번 문항 input
+%숫자, 1번 문항 input
 function inputText = getTextInput(w, rect, prompt)
     inputText = '';
     KbName('UnifyKeyNames');
