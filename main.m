@@ -6,7 +6,7 @@ function main()
     %% 카드 조건 불러오기
     data = load('answersheet.mat');
     problems = data.ans;
-    numMap = containers.Map({'one','two','three','four'}, {'1', '2', '3', '4'});
+    numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
     final_cases_for_test = cell(10,12);
 
     % 위치 지정 (3x4)
