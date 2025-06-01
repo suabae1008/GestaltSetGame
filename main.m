@@ -3,6 +3,9 @@ function main()
     [windowPtr, rect] = Screen('OpenWindow', 0, [150 150 150], [0 0 2560 1600]);
     InitializePsychSound(1);
 
+    %% 설문조사 실행
+    responses = runSurvey(windowPtr, rect);
+
     %% 카드 조건 불러오기
     data = load('answersheet.mat');
     problems = data.ans;
@@ -65,4 +68,7 @@ function main()
     end
 
     sca;
+
+    %% 결과 저장
+    save('final_experiment_results.mat', 'responses', 'RT', 'error');
 end
