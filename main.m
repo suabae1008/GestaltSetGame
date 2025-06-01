@@ -19,7 +19,7 @@ function main()
     [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
     positions = [xGrid(:), yGrid(:)];
     
-    %Trial 수 지정
+    %Trial 수 지정 (중요)
     trialNum = 3;
 
     %실험 초기화
