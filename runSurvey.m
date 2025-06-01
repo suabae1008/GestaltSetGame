@@ -1,4 +1,4 @@
-function runSurvey()
+function runSurvey(w, rect)
     % Psychtoolbox 초기화
     Screen('Preference', 'SkipSyncTests', 2);
     [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
@@ -6,28 +6,44 @@ function runSurvey()
     KbName('UnifyKeyNames');
     
     %설문 시작 안내
-    openingText = 'Please answer the survey with insturcted keys'
+    openingText = ['Survey will start soon.\n Please use the keypad and Enter to answer the questions'];
     DrawFormattedText(w,openingText,'center','center', [0 0 0]);
 	Screen('Flip', w);
-	WaitSecs(3);
+	WaitSecs(4);
     Screen('Flip', w);
 
     % 질문 및 입력 타입 설정
-    questions = {
-        '1. What is your age? (Type and press Enter)', ...
-        '2. What is your gender? (Press M for Male / F for Female)', ...
-        '3. Have you played SET game before? (Y/N)', ...
-        '4. How often do you play puzzle games? (1:Never ~ 5:Very often)', ...
-        ['5. What is your visual strategy?\n'  newline ...
-         '   1. I quickly scan the whole picture' newline ...
-         '   2. I sequentially check each part']
-    };
+  questions = {
+    ['Information: Enter your group \n\n'...
+    '    Control group = c\n'...
+    '    Group 1 = 1\n'...
+    '    Group 2 = 2\n'...
+    '    Group 3 = 3\n'], ...
+    '1. What is your age? (Type and press Enter)', ...
+    '2. What is your gender? \n (M for Male / F for Female)', ...
+    '3. Have you played SET game before? (Y/N)', ...
+    ['4. How often do you play puzzle games?\n\n' ...
+    '    1. Never (less than once a month)\n' ...
+    '    2. Rarely (2–3 times a month)\n' ...
+    '    3. Sometimes (about once a week)\n' ...
+    '    4. Often (2–3 times a week)\n' ...
+    '    5. Very often (almost every day)'], ...
+    ['5. What is your visual strategy?\n\n' ...
+     '   1. I quickly scan the whole picture\n' ...
+     '   2. I sequentially check each part']
+};
 
-    inputTypes = {'text', 'key', 'key', 'key', 'key'};
-    validKeys = {{}, {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
-    labels = {{}, {'Male','Female'}, {'Yes','No'}, {}, {}};
-    labels_confirm = {{},{'Male','Female'}, {'Yes','No'},...
-        {'Never', 'Sometimes', 'Normal', 'Often', 'Very Often'},...
+    inputTypes = {'key', 'text', 'key', 'key', 'key', 'key'};
+    validKeys = {{'C','1','2','3'}, {}, {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
+    question_label = {{'  Group : '},{'   1. Age : '}, {'   2. Gender : '}, {'   3. SET experience : '},...
+        {'   4. Playing Puzzles : '}, {'   5. Visual strategy :'}};
+    labels = {{}, {}, {'Male','Female'}, {'Yes','No'}, {}, {}};
+    labels_confirm = {{},{},{'Male','Female'}, {'Yes','No'},...
+        {'Never (less than once a month)', 
+        'Rarely (2–3 times a month)', 
+        'Sometimes (about once a week)', 
+        'Often (2–3 times a week)', 
+        'Very often (almost every day)'},...
         {'Scan whole picture', 'Check each part'}};
 
     responses = cell(length(questions), 1);
@@ -52,7 +68,7 @@ end
 % 확인 및 재입력 텍스트 구성
 confirmText = 'Please confirm your responses:\n\n';
 for i = 1:length(questions)
-    confirmText = [confirmText, sprintf('Q%d: %s\n', i, responses_confirm{i})];
+    confirmText = [confirmText, sprintf('%s %s\n', question_label{i}{1}, responses_confirm{i})];
 end
 confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 
@@ -85,7 +101,7 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     fclose(resultFile);
     
     % 설문 완료 메세지 
-    closingText = 'Thank you for your answers. Test will be begin'
+    closingText = 'Thank you for your answers. Test will be begin';
     DrawFormattedText(w,closingText,'center','center', [0 0 0]);
 	Screen('Flip', w);
 	WaitSecs(2);
@@ -148,7 +164,7 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
         % 화면 표시
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
-        DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.6, [0 0 0]);
+        DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.75, [0 0 0]);
         Screen('Flip', w);
 
         % 키 입력 대기

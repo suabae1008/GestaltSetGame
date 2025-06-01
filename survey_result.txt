@@ -1,7 +1,7 @@
 ==== Survey Result ====
 
 Q1: 25
-Q2: Male
+Q2: Female
 Q3: Yes
-Q4: 3
+Q4: 1
 Q5: 2
