@@ -1,16 +1,14 @@
-function responses = runSurvey(w, rect)
+function responses = runSurvey(windowPtr, rect)
     % Psychtoolbox 초기화
-    Screen('Preference', 'SkipSyncTests', 2);
-    [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 2560 1600]);
-    Screen('TextSize', w, 28);
+    Screen('TextSize', windowPtr, 40);
     KbName('UnifyKeyNames');
     
     %설문 시작 안내
     openingText = 'Survey will start soon.\n Please use the keypad and Enter to answer the questions';
-    DrawFormattedText(w,openingText,'center','center', [0 0 0]);
-	Screen('Flip', w);
+    DrawFormattedText(windowPtr,openingText,'center','center', [0 0 0]);
+	Screen('Flip', windowPtr);
 	WaitSecs(4);
-    Screen('Flip', w);
+    Screen('Flip', windowPtr);
 
     % 질문 및 입력 타입 설정
   questions = {
@@ -52,10 +50,10 @@ function responses = runSurvey(w, rect)
     % 질문 답 루프
  for q = 1:length(questions)
     if strcmp(inputTypes{q}, 'text')
-        responses{q} = getTextInput(w, rect, questions{q});
+        responses{q} = getTextInput(windowPtr, rect, questions{q});
         responses_confirm{q} = responses{q}; 
     else
-        responses{q} = getKeyInput(w, rect, questions{q}, validKeys{q}, labels{q});
+        responses{q} = getKeyInput(windowPtr, rect, questions{q}, validKeys{q}, labels{q});
         idx = find(strcmpi(responses{q}, validKeys{q}), 1);
         if ~isempty(idx) && ~isempty(labels_confirm{q})
             responses_confirm{q} = labels_confirm{q}{idx};  % 확인용 label로 저장
@@ -73,9 +71,9 @@ end
 confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 
     while true
-        Screen('FillRect', w, [255 255 255]);
-        DrawFormattedText(w, confirmText, 'center', 'center', [0 0 0]);
-        Screen('Flip', w);
+        Screen('FillRect', windowPtr, [255 255 255]);
+        DrawFormattedText(windowPtr, confirmText, 'center', 'center', [0 0 0]);
+        Screen('Flip', windowPtr);
         KbWait;
         [~,~,kc] = KbCheck;
         key = KbName(find(kc));
@@ -101,8 +99,8 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     
     % 설문 완료 메세지 
     closingText = 'Thank you for your answers. Test will be begin';
-    DrawFormattedText(w,closingText,'center','center', [0 0 0]);
-	Screen('Flip', w);
+    DrawFormattedText(windowPtr,closingText,'center','center', [0 0 0]);
+	Screen('Flip', windowPtr);
 	WaitSecs(2);
     ListenChar(0); % 키보드 제어 복원
     ShowCursor;    % 마우스 커서 복원
@@ -164,7 +162,7 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
         % 화면 표시
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
-        DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.75, [0 0 0]);
+        DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.6, [0 0 0]);
         Screen('Flip', w);
 
         % 키 입력 대기
