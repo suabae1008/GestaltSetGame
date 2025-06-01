@@ -1,7 +1,7 @@
 function responses = runSurvey(w, rect)
     % Psychtoolbox 초기화
     Screen('Preference', 'SkipSyncTests', 2);
-    [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
+    [w, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 2560 1600]);
     Screen('TextSize', w, 28);
     KbName('UnifyKeyNames');
     
@@ -84,7 +84,6 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
         if strcmpi(key, 'Y')
             break;
         elseif strcmpi(key, 'N')
-            Screen('CloseAll');
             runSurvey();  % 재시작
             return;
         end
@@ -105,7 +104,6 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     DrawFormattedText(w,closingText,'center','center', [0 0 0]);
 	Screen('Flip', w);
 	WaitSecs(2);
-    Screen('CloseAll');
     ListenChar(0); % 키보드 제어 복원
     ShowCursor;    % 마우스 커서 복원
     %disp('Saved to survey_result.txt');
