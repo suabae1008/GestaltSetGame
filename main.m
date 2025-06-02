@@ -103,7 +103,7 @@ function main()
         instructionImages = {'Images/instruction-4.png'};
         InstructionSlides(windowPtr, instructionImages);
 
-        DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n Good Luck! ', 'center', 'center', [0 0 0]);
+        DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n\ㅜ Good Luck! ', 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr);
         KbStrokeWait;
         WaitSecs(5);
