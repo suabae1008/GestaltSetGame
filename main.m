@@ -14,13 +14,14 @@ end
 function main()
     try
         Screen('Preference','SkipSyncTests', 1);
-        [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 2560 1600]);
+        [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1920 1080]);
         InitializePsychSound(1);
+        ListenChar(2);
 
         %% 설문조사 실행
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
-        Screen('FillRect', windowPtr, [150 150 150],[0 0 2560 1600]);
+        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]);
         Screen('Flip', windowPtr);
 
         %% 위치 지정 (3x4)
@@ -155,4 +156,6 @@ function main()
         sca;  % 화면 안전하게 종료
         disp(getReport(ME));  % 에러 정보 출력
     end
+      ListenChar(0); % 키보드 제어 복원
+      ShowCursor;    % 마우스 커서 복원
 end
