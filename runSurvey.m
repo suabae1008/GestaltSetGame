@@ -4,8 +4,10 @@ function responses = runSurvey(windowPtr, rect);
     % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1290 900]);
     
     % Psychtoolbox 초기화
+    ListenChar(2);
     Screen('TextSize', windowPtr, 42);
     KbName('UnifyKeyNames');
+    
     
     %설문 시작 안내
     openingText = 'Survey will start soon.\n Please use the keypad and Enter to answer the questions';
@@ -112,6 +114,7 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
     DrawFormattedText(windowPtr,closingText,'center','center', [0 0 0]);
 	Screen('Flip', windowPtr);
 	WaitSecs(2);
+
     ListenChar(0); % 키보드 제어 복원
     ShowCursor;    % 마우스 커서 복원
     % sca;
