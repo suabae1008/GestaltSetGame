@@ -1,7 +1,7 @@
 function responses = runSurvey(windowPtr, rect);  
     
     % Screen('Preference','SkipSyncTests', 2);
-    % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1080 720]);
+    % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1290 900]);
     
     % Psychtoolbox 초기화
     Screen('TextSize', windowPtr, 42);
