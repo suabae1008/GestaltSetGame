@@ -21,8 +21,6 @@ function main()
         %% 설문조사 실행
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
-        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]);
-        Screen('Flip', windowPtr);
 
         %% SET 게임 설명
         instructionImages = {
@@ -31,7 +29,14 @@ function main()
         'Images/instruction-3.png'
         };
         InstructionSlides(windowPtr, instructionImages);
+        DrawFormattedText(windowPtr, 'Instruction complete. Press any key to start practice trial', 'center', 'center', [0 0 0]);
+        Screen('Flip', windowPtr);
+        KbStrokeWait;
+        WaitSecs(2);
 
+        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]); %회색바탕 생성
+        Screen('Flip', windowPtr);
+        
         %% 위치 지정 (3x4)
         numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
