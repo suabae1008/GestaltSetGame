@@ -24,6 +24,14 @@ function main()
         Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]);
         Screen('Flip', windowPtr);
 
+        %% SET 게임 설명
+        instructionImages = {
+        'Images/instruction-1.png',
+        'Images/instruction-2.png',
+        'Images/instruction-3.png'
+        };
+        InstructionSlides(windowPtr, instructionImages);
+
         %% 위치 지정 (3x4)
         numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
