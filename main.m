@@ -46,7 +46,9 @@ function main()
         practiceData = load('answersheet_screened.mat');
         practiceProblems = practiceData.screened_answer;  % 예시 인덱스 1, 2
 
-        DrawFormattedText(windowPtr, 'Lets start practice trial. Press any key to start', 'center', 'center', [0 0 0]);
+        DrawFormattedText(windowPtr, ['Lets start practice trial.\n'...
+            ' If your answer is correct, you can hear high beep sound.\n'...
+            'Press any key to start'], 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr);
         KbStrokeWait;
 
@@ -93,15 +95,25 @@ function main()
             end
         end
 
-        DrawFormattedText(windowPtr, 'Practice is over. Press any key to move on', 'center', 'center', [0 0 0]);
-        Screen('Flip', windowPtr); KbStrokeWait;
+        %% 실제 실험 전 설명
+        DrawFormattedText(windowPtr, 'Practice is complete. Press any key to move on', 'center', 'center', [0 0 0]);
+        Screen('Flip', windowPtr); 
+        KbStrokeWait;
+        
+        instructionImages = {'Images/instruction-4.png'};
+        InstructionSlides(windowPtr, instructionImages);
+
+        DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n Good Luck! ', 'center', 'center', [0 0 0]);
+        Screen('Flip', windowPtr);
+        KbStrokeWait;
+        WaitSecs(5);
 
         %% 실험 데이터
         data = load('answersheet.mat');
         practice_problems = data.ans;
         final_cases_for_test = cell(10,12);
 
-        trialNum = 1;
+        trialNum = 3;
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);
         trialData(trialNum) = struct();
