@@ -19,7 +19,7 @@ function main()
         practiceData = load('answersheet_screened.mat');
         practiceProblems = practiceData.screened_answer;  % 예시 인덱스 1, 2
 
-        DrawFormattedText(windowPtr, 'Lets start practice trial.', 'center', 'center', [0 0 0]);
+        DrawFormattedText(windowPtr, 'Lets start practice trial. Press any key to start', 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr);
         KbStrokeWait;
 
@@ -65,7 +65,7 @@ function main()
             end
         end
 
-        DrawFormattedText(windowPtr, 'Practice is over.', 'center', 'center', [0 0 0]);
+        DrawFormattedText(windowPtr, 'Practice is over. Press any key to move on', 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr); KbStrokeWait;
 
         %% 실험 데이터
