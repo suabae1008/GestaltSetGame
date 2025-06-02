@@ -26,6 +26,7 @@ function main()
         for trialIdx = 1:2
             card_set = practiceProblems(trialIdx).cards;
             practice_case = cell(1,12);
+
             for j = 1:12
                 card = card_set(j);
                 practice_case{j} = {card.shape, card.color, card.pattern, numMap(card.number)};
