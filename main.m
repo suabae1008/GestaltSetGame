@@ -113,9 +113,9 @@ function main()
         practice_problems = data.ans;
         final_cases_for_test = cell(10,12);
 
-        trialNum = 3;
+        trialNum = 10;
         RTs = zeros(1, trialNum);
-        errors = zeros(1, trialNum);
+        errors = zeros(1, trialNum);1
         trialData(trialNum) = struct();
 
         for trialIdx = 1:trialNum
