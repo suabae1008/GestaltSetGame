@@ -26,7 +26,9 @@ function main()
         instructionImages = {
         'Images/instruction-1.png',
         'Images/instruction-2.png',
-        'Images/instruction-3.png'
+        'Images/instruction-3.png',
+        'Images/insturction-4.png',
+        'Images/instruction-5.png'
         };
         InstructionSlides(windowPtr, instructionImages);
         DrawFormattedText(windowPtr, 'Instruction complete. Press any key to start practice trial', 'center', 'center', [0 0 0]);
@@ -100,10 +102,10 @@ function main()
         Screen('Flip', windowPtr); 
         KbStrokeWait;
         
-        instructionImages = {'Images/instruction-4.png'};
+        instructionImages = {'Images/instruction-6.png'};
         InstructionSlides(windowPtr, instructionImages);
 
-        DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n\ㅜ Good Luck! ', 'center', 'center', [0 0 0]);
+        DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n\n Good Luck! ', 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr);
         KbStrokeWait;
         WaitSecs(5);
@@ -113,9 +115,9 @@ function main()
         practice_problems = data.ans;
         final_cases_for_test = cell(10,12);
 
-        trialNum = 2;
+        trialNum = 10;
         RTs = zeros(1, trialNum);
-        errors = zeros(1, trialNum);1
+        errors = zeros(1, trialNum);
         trialData(trialNum) = struct();
 
         for trialIdx = 1:trialNum
