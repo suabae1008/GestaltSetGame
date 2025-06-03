@@ -11,9 +11,11 @@ function main()
 
         %% SET 게임 설명
         instructionImages = {
-            'Images/instruction-1.png',
-            'Images/instruction-2.png',
-            'Images/instruction-3.png'
+        'Images/instruction-1.png',
+        'Images/instruction-2.png',
+        'Images/instruction-3.png',
+        'Images/instruction-4.png',
+        'Images/instruction-5.png'
         };
         InstructionSlides(windowPtr, instructionImages);
         DrawFormattedText(windowPtr, 'Instruction complete. Press any key to start practice trial', 'center', 'center', [0 0 0]);
@@ -100,20 +102,33 @@ function main()
         allProblems = data.ans.prob;
         allAns = data.ans.ans;
 
+        % 카드 위치
+        switch responses.group
+            case 'C'
+                cardpositions = {[525 170]; [815 170]; [1105 170]; [1395 170]; [525 540]; [815 540]; [1105 540]; [1395 540]; [525 910]; [815 910]; [1105 910]; [1395 910]};
+            case '1'
+                cardpositions = {[565 210]; [815 210]; [1105 210]; [1355 210]; [565 540]; [815 540]; [1105 540]; [1355 540]; [565 870]; [815 870]; [1105 870]; [1355 870]};
+            case '2'
+                cardpositions = {[585 170]; [835 170]; [1085 170]; [1335 170]; [585 540]; [835 540]; [1085 540]; [1335 540]; [585 910]; [835 910]; [1085 910]; [1335 910]};
+            case '3'
+                cardpositions = {[565 210]; [815 210]; [1105 170]; [1355 170]; [565 540]; [815 540]; [1105 540]; [1355 540]; [565 910]; [815 910]; [1105 870]; [1355 870]};
+        end
+
         % 셔플하여 앞 5, 뒤 5 문제로 분할
-        shuffledIdx = randperm(10);
-        firstSetIdx = shuffledIdx(1:5);
-        secondSetIdx = shuffledIdx(6:10);
+        shuffledIdx = randperm(8);
+        firstSetIdx = shuffledIdx(1:3);
+        secondSetIdx = shuffledIdx(4:6);
+        thirdSetIdx = shuffledIdx(7:8);
 
         % 연습 문제 불러오기
         practiceProblems = data.ans.Prac;
         practiceProbAns = data.ans.PracAns;
 
-        % 실험용 전체 문제 구성 (5 + 연습 2 + 5)
-        combinedProblems = [allProblems(firstSetIdx), practiceProblems(1:2), allProblems(secondSetIdx)];
-        combinedAns = [allAns(firstSetIdx), practiceProbAns(1:2), allAns(secondSetIdx)];
+        % 실험용 전체 문제 구성 (3 + 연습 + 3 + 연습 + 2)
+        combinedProblems = [allProblems(firstSetIdx), practiceProblems(1), allProblems(secondSetIdx), practiceProblems(2), allProblems(thirdSetIdx)];
+        combinedAns = [allAns(firstSetIdx), practiceProbAns(1), allAns(secondSetIdx), practiceProbAns(2), allAns(thirdSetIdx)];
 
-        trialNum = 12;
+        trialNum = 10;
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);
         trialData(trialNum) = struct();
@@ -122,27 +137,14 @@ function main()
             card_set = combinedProblems{1,trialIdx};
             for j = 1:12
                 card = card_set(j,:);
-                final_cases_for_test{trialIdx,j} = {card{1}, card{2}, card{3}, numMap(card{4})};
-            end
-
-            for k = 1:12
-                params = shuffledCards{k};
-                generateCard(windowPtr, params{1}, params{2}, params{3}, params{4}, positions(k,:));
+                generateCard(windowPtr, card{1}, card{2}, card{3}, numMap(card{4}), cardpositions{j});
             end
             StartTime = Screen('Flip', windowPtr);
             correctCardIndices = combinedAns{trialIdx};
-            for n = 1:length(shuffledCards)
-                for m = 1:length(correctCards)
-                    if isequal(shuffledCards{n}, correctCards{m})
-                        correctCardIndices(end+1) = n;
-                        break;
-                    end
-                end
-            end
 
-            [EndTime, err] = CheckMouseClicks(positions(correctCardIndices(1),:), ...
-                                              positions(correctCardIndices(2),:), ...
-                                              positions(correctCardIndices(3),:));
+            [EndTime, err] = CheckMouseClicks(cardpositions{correctCardIndices(1)}, ...
+                                              cardpositions{correctCardIndices(2)}, ...
+                                              cardpositions{correctCardIndices(3)});
             RTs(trialIdx) = EndTime - StartTime;
             errors(trialIdx) = err;
             disp(['Trial ', num2str(trialIdx), ' - RT: ', num2str(RTs(trialIdx)), ', Error: ', num2str(err)]);
