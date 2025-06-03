@@ -9,11 +9,17 @@ function main()
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
 
+        %% 설문조사 실행
+        responses = runSurvey(windowPtr, rect);
+        WaitSecs(2);
+
         %% SET 게임 설명
         instructionImages = {
         'Images/instruction-1.png',
         'Images/instruction-2.png',
         'Images/instruction-3.png',
+        'Images/instruction-4.png',
+        'Images/instruction-5.png'
         };
         InstructionSlides(windowPtr, instructionImages);
         DrawFormattedText(windowPtr, 'Instruction complete. Press any key to start practice trial', 'center', 'center', [0 0 0]);
@@ -21,15 +27,15 @@ function main()
         KbStrokeWait;
         WaitSecs(2);
 
-        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]);
+        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]); %회색바탕 생성
         Screen('Flip', windowPtr);
-
+        
         %% 위치 지정 (3x4)
         numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
         positions = [xGrid(:), yGrid(:)];
 
-        %% 연습 문제 (screened 데이터 사용)
+        %% 연습 문제
         practiceData = load('fin_ans.mat');
         practiceProblems = practiceData.ans.Prac;
         practiceProblemsAns = practiceData.ans.PracAns;
