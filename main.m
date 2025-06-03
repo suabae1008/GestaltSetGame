@@ -27,7 +27,7 @@ function main()
         'Images/instruction-1.png',
         'Images/instruction-2.png',
         'Images/instruction-3.png',
-        'Images/insturction-4.png',
+        'Images/instruction-4.png',
         'Images/instruction-5.png'
         };
         InstructionSlides(windowPtr, instructionImages);
@@ -115,7 +115,7 @@ function main()
         practice_problems = data.ans;
         final_cases_for_test = cell(10,12);
 
-        trialNum = 10;
+        trialNum = 1;
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);
         trialData(trialNum) = struct();
