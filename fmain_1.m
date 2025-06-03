@@ -14,8 +14,6 @@ function main()
         'Images/instruction-1.png',
         'Images/instruction-2.png',
         'Images/instruction-3.png',
-        'Images/instruction-4.png',
-        'Images/instruction-5.png'
         };
         InstructionSlides(windowPtr, instructionImages);
         DrawFormattedText(windowPtr, 'Instruction complete. Press any key to start practice trial', 'center', 'center', [0 0 0]);
@@ -32,8 +30,9 @@ function main()
         positions = [xGrid(:), yGrid(:)];
 
         %% 연습 문제 (screened 데이터 사용)
-        practiceData = load('answersheet_screened.mat');
-        practiceProblems = practiceData.screened_answer;
+        practiceData = load('fin_ans.mat');
+        practiceProblems = practiceData.ans.Prac;
+        practiceProblemsAns = practiceData.ans.PracAns;
 
         DrawFormattedText(windowPtr, ['Lets start practice trial.\n'...
             ' If your answer is correct, you can hear high beep sound.\n'...
@@ -42,36 +41,15 @@ function main()
         KbStrokeWait;
 
         for trialIdx = 1:2
-            card_set = practiceProblems(trialIdx).cards;
-            practice_case = cell(1,12);
-
+            card_set = practiceProblems{1,trialIdx};
             for j = 1:12
-                card = card_set(j);
-                practice_case{j} = {card.shape, card.color, card.pattern, numMap(card.number)};
+                card = card_set(j,:);
+                generateCard(windowPtr, card{1}, card{2}, card{3}, numMap(card{4}), positions(j,:));
             end
 
-            correctCards = practice_case(1:3);
-            wrongCards = practice_case(4:12);
-            allCards = [correctCards, wrongCards];
-            shuffledIdx = randperm(12);
-            shuffledCards = allCards(shuffledIdx);
-
-            for k = 1:12
-                params = shuffledCards{k};
-                generateCard(windowPtr, params{1}, params{2}, params{3}, params{4}, positions(k,:));
-            end
+            correctCardIndices = practiceProblemsAns{trialIdx};
             StartTime = Screen('Flip', windowPtr);
-
-            correctCardIndices = [];
-            for n = 1:12
-                for m = 1:3
-                    if isequal(shuffledCards{n}, correctCards{m})
-                        correctCardIndices(end+1) = n;
-                        break;
-                    end
-                end
-            end
-
+            
             [EndTime, err] = CheckMouseClicks(positions(correctCardIndices(1),:), ...
                                               positions(correctCardIndices(2),:), ...
                                               positions(correctCardIndices(3),:));
@@ -105,13 +83,13 @@ function main()
         % 카드 위치
         switch responses.group
             case 'C'
-                cardPositions = {[450 160]; [790 160]; [1130 160]; [1470 160]; [450 540]; [790 540]; [1130 540]; [1470 540]; [450 920]; [790 920]; [1130 920]; [1470 920]};
+                cardpositions = {[525 170]; [815 170]; [1105 170]; [1395 170]; [525 540]; [815 540]; [1105 540]; [1395 540]; [525 910]; [815 910]; [1105 910]; [1395 910]};
             case '1'
-                cardPositions = {[450 240]; [710 240]; [1210 240]; [1470 240]; [450 540]; [710 540]; [1210 540]; [1470 540]; [450 840]; [710 840]; [1210 840]; [1470 840]};
+                cardpositions = {[565 210]; [815 210]; [1105 210]; [1355 210]; [565 540]; [815 540]; [1105 540]; [1355 540]; [565 870]; [815 870]; [1105 870]; [1355 870]};
             case '2'
-                cardPositions = {[560 160]; [820 160]; [1090 160]; [1350 160]; [560 540]; [820 540]; [1090 540]; [1350 540]; [560 920]; [820 920]; [1090 920]; [1350 920]};
+                cardpositions = {[585 170]; [835 170]; [1085 170]; [1335 170]; [585 540]; [835 540]; [1085 540]; [1335 540]; [585 910]; [835 910]; [1085 910]; [1335 910]};
             case '3'
-                cardPositions = {[450 160]; [710 160]; [1210 160]; [1470 160]; [450 460]; [710 460]; [1210 620]; [1470 620]; [450 920]; [710 920]; [1210 920]; [1470 920]};
+                cardpositions = {[565 210]; [815 210]; [1105 170]; [1355 170]; [565 540]; [815 540]; [1105 540]; [1355 540]; [565 910]; [815 910]; [1105 870]; [1355 870]};
         end
 
         % 셔플하여 앞 5, 뒤 5 문제로 분할
@@ -153,7 +131,6 @@ function main()
             trialData(trialIdx).correct_indices = correctCardIndices;
             trialData(trialIdx).response_time = RTs(trialIdx);
             trialData(trialIdx).error = err;
-            trialData(trialIdx).card_order = shuffledCards;
 
             DrawFormattedText(windowPtr, 'Press any key for next trial', 'center', 'center', [0 0 0]);
             Screen('Flip', windowPtr);
