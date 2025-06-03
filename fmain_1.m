@@ -9,10 +9,6 @@ function main()
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
 
-        %% 설문조사 실행
-        responses = runSurvey(windowPtr, rect);
-        WaitSecs(2);
-
         %% SET 게임 설명
         instructionImages = {
         'Images/instruction-1.png',
@@ -35,7 +31,7 @@ function main()
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
         positions = [xGrid(:), yGrid(:)];
 
-        %% 연습 문제
+        %% 연습 문제 (screened 데이터 사용)
         practiceData = load('fin_ans.mat');
         practiceProblems = practiceData.ans.Prac;
         practiceProblemsAns = practiceData.ans.PracAns;
