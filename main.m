@@ -113,7 +113,7 @@ function main()
         practice_problems = data.ans;
         final_cases_for_test = cell(10,12);
 
-        trialNum = 10;
+        trialNum = 2;
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);1
         trialData(trialNum) = struct();
