@@ -12,7 +12,7 @@ ex) [1280 800] 입력시 카드는 [1130 600 1430 1000]에 그려짐
 function generateCard(screen, shape, color, pattern, num, position)
     % 카드 배경 만들기
     cardWidth = 120;
-    cardHeight = 160;
+    cardHeight = 140;
     cardPosition = [position(1)-cardWidth, position(2)-cardHeight, position(1)+cardWidth, position(2)+cardHeight];
     Screen('FillRect', screen, [255 255 255], cardPosition);
     Screen('FrameRect', screen, [0 0 0], cardPosition, 3);
@@ -32,15 +32,15 @@ function generateCard(screen, shape, color, pattern, num, position)
         case 1
             NumShapePos = [position(1), position(2), position(1), position(2)];
         case 2
-            NumShapePos = [position(1), position(2)+50; position(1), position(2)-50];
+            NumShapePos = [position(1), position(2)+40; position(1), position(2)-40];
         case 3
-            NumShapePos = [position(1), position(2)+100; position(1), position(2);position(1), position(2)-100;];
+            NumShapePos = [position(1), position(2)+80; position(1), position(2);position(1), position(2)-80;];
     end
 
     % 도형 그리기
     shapeWidth = 80;
-    shapeHeight = 30;
-    frameWidth = 7;
+    shapeHeight = 20;
+    frameWidth = 10;
 
 
     %shapePosition = [position(1)-shapeWidth, position(2)-shapeHeight, position(1)+shapeWidth, position(2)+shapeHeight];
