@@ -89,7 +89,7 @@ function main()
         Screen('Flip', windowPtr); 
         KbStrokeWait;
 
-        instructionImages = {'Images/instruction-4.png'};
+        instructionImages = {'Images/instruction-6.png'};
         InstructionSlides(windowPtr, instructionImages);
 
         DrawFormattedText(windowPtr, 'All preparations are complete.\n After you press any key, The test will begin in 5seconds.\n Good Luck! ', 'center', 'center', [0 0 0]);
@@ -128,7 +128,7 @@ function main()
         combinedProblems = [allProblems(firstSetIdx), practiceProblems(1), allProblems(secondSetIdx), practiceProblems(2), allProblems(thirdSetIdx)];
         combinedAns = [allAns(firstSetIdx), practiceProbAns(1), allAns(secondSetIdx), practiceProbAns(2), allAns(thirdSetIdx)];
 
-        trialNum = 10;
+        trialNum = 1;
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);
         trialData(trialNum) = struct();
