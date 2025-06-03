@@ -105,8 +105,8 @@ function main()
         practiceProbAns = data.ans.PracAns;
 
         % 실험용 전체 문제 구성 (3 + 연습 + 3 + 연습 + 2)
-        combinedProblems = [allProblems(firstSetIdx), practiceProblems(1), allProblems(secondSetIdx), practiceProblems(2), allProblems(thirdSetIdx)];
-        combinedAns = [allAns(firstSetIdx), practiceProbAns(1), allAns(secondSetIdx), practiceProbAns(2), allAns(thirdSetIdx)];
+        combinedProblems = [allProblems(firstSetIdx), allProblems(9), allProblems(secondSetIdx), allProblems(10), allProblems(thirdSetIdx)];
+        combinedAns = [allAns(firstSetIdx), allAns(9), allAns(secondSetIdx), allAns(10), allAns(thirdSetIdx)];
 
         trialNum = 10;
         
