@@ -100,10 +100,6 @@ function main()
         secondSetIdx = shuffledIdx(4:6);
         thirdSetIdx = shuffledIdx(7:8);
 
-        % 연습 문제 불러오기
-        practiceProblems = data.ans.Prac;
-        practiceProbAns = data.ans.PracAns;
-
         % 실험용 전체 문제 구성 (3 + 연습 + 3 + 연습 + 2)
         combinedProblems = [allProblems(firstSetIdx), allProblems(9), allProblems(secondSetIdx), allProblems(10), allProblems(thirdSetIdx)];
         combinedAns = [allAns(firstSetIdx), allAns(9), allAns(secondSetIdx), allAns(10), allAns(thirdSetIdx)];
