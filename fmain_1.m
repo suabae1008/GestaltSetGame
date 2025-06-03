@@ -9,6 +9,10 @@ function main()
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
 
+        %% 설문조사 실행
+        responses = runSurvey(windowPtr, rect);
+        WaitSecs(2);
+
         %% SET 게임 설명
         instructionImages = {
         'Images/instruction-1.png',
@@ -23,17 +27,18 @@ function main()
         KbStrokeWait;
         WaitSecs(2);
 
-        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]);
+        Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]); %회색바탕 생성
         Screen('Flip', windowPtr);
-
+        
         %% 위치 지정 (3x4)
         numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
         positions = [xGrid(:), yGrid(:)];
 
-        %% 연습 문제 (screened 데이터 사용)
-        practiceData = load('answersheet_screened.mat');
-        practiceProblems = practiceData.screened_answer;
+        %% 연습 문제
+        practiceData = load('fin_ans.mat');
+        practiceProblems = practiceData.ans.Prac;
+        practiceProblemsAns = practiceData.ans.PracAns;
 
         DrawFormattedText(windowPtr, ['Lets start practice trial.\n'...
             ' If your answer is correct, you can hear high beep sound.\n'...
@@ -42,36 +47,15 @@ function main()
         KbStrokeWait;
 
         for trialIdx = 1:2
-            card_set = practiceProblems(trialIdx).cards;
-            practice_case = cell(1,12);
-
+            card_set = practiceProblems{1,trialIdx};
             for j = 1:12
-                card = card_set(j);
-                practice_case{j} = {card.shape, card.color, card.pattern, numMap(card.number)};
+                card = card_set(j,:);
+                generateCard(windowPtr, card{1}, card{2}, card{3}, numMap(card{4}), positions(j,:));
             end
 
-            correctCards = practice_case(1:3);
-            wrongCards = practice_case(4:12);
-            allCards = [correctCards, wrongCards];
-            shuffledIdx = randperm(12);
-            shuffledCards = allCards(shuffledIdx);
-
-            for k = 1:12
-                params = shuffledCards{k};
-                generateCard(windowPtr, params{1}, params{2}, params{3}, params{4}, positions(k,:));
-            end
+            correctCardIndices = practiceProblemsAns{trialIdx};
             StartTime = Screen('Flip', windowPtr);
-
-            correctCardIndices = [];
-            for n = 1:12
-                for m = 1:3
-                    if isequal(shuffledCards{n}, correctCards{m})
-                        correctCardIndices(end+1) = n;
-                        break;
-                    end
-                end
-            end
-
+            
             [EndTime, err] = CheckMouseClicks(positions(correctCardIndices(1),:), ...
                                               positions(correctCardIndices(2),:), ...
                                               positions(correctCardIndices(3),:));
@@ -153,7 +137,6 @@ function main()
             trialData(trialIdx).correct_indices = correctCardIndices;
             trialData(trialIdx).response_time = RTs(trialIdx);
             trialData(trialIdx).error = err;
-            trialData(trialIdx).card_order = shuffledCards;
 
             DrawFormattedText(windowPtr, 'Press any key for next trial', 'center', 'center', [0 0 0]);
             Screen('Flip', windowPtr);

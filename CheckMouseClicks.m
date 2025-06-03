@@ -2,7 +2,7 @@ function [EndTime, error] = CheckMouseClicks(ans1, ans2, ans3)
 error = 0;
 
 cardWidth = 120;
-cardHeight = 160;
+cardHeight = 140;
 target1 = [ans1(1)-cardWidth, ans1(2)-cardHeight, ans1(1)+cardWidth, ans1(2)+cardHeight];
 target2 = [ans2(1)-cardWidth, ans2(2)-cardHeight, ans2(1)+cardWidth, ans2(2)+cardHeight];
 target3 = [ans3(1)-cardWidth, ans3(2)-cardHeight, ans3(1)+cardWidth, ans3(2)+cardHeight];
