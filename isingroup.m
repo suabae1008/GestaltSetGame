@@ -1,6 +1,6 @@
 function ingroup = isingroup(group, probIDX)
 
-    ingroup = zeros(1, 10);
+    ingroup = zeros(1, length(probIDX));  % ✅ 유연하게 동작
     
     switch group
     case '1'

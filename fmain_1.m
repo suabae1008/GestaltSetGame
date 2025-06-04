@@ -9,10 +9,6 @@ function main()
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
 
-        %% 설문조사 실행
-        responses = runSurvey(windowPtr, rect);
-        WaitSecs(2);
-
         %% SET 게임 설명
         instructionImages = {
         'Images/instruction-1.png',
@@ -35,7 +31,7 @@ function main()
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
         positions = [xGrid(:), yGrid(:)];
 
-        %% 연습 문제
+        %% 연습 문제 (screened 데이터 사용)
         practiceData = load('fin_ans.mat');
         practiceProblems = practiceData.ans.Prac;
         practiceProblemsAns = practiceData.ans.PracAns;
@@ -69,6 +65,7 @@ function main()
         end
 
         %% 실제 실험 전 설명
+
         DrawFormattedText(windowPtr, 'Practice is complete. Press any key to move on', 'center', 'center', [0 0 0]);
         Screen('Flip', windowPtr); 
         KbStrokeWait;
@@ -82,6 +79,7 @@ function main()
         WaitSecs(5);
 
         %% 실험 데이터
+
         data = load('fin_ans.mat');
         allProblems = data.ans.prob;
         allAns = data.ans.ans;
@@ -109,12 +107,21 @@ function main()
         practiceProbAns = data.ans.PracAns;
 
         % 실험용 전체 문제 구성 (3 + 연습 + 3 + 연습 + 2)
+        
         combinedProblems = [allProblems(firstSetIdx), practiceProblems(1), allProblems(secondSetIdx), practiceProblems(2), allProblems(thirdSetIdx)];
         combinedAns = [allAns(firstSetIdx), practiceProbAns(1), allAns(secondSetIdx), practiceProbAns(2), allAns(thirdSetIdx)];
+        trialNum = 10;
 
-        trialNum = 1;
+        % 원래 문제 번호를 기록하는 배열
+        combinedOriginalIndices = [firstSetIdx, -1, secondSetIdx, -2, thirdSetIdx];  
+        
+        % isingroup 적용: 결과는 1x10 logical vector
+        withinGroupFlags = isingroup(responses.group, combinedOriginalIndices);
+
         RTs = zeros(1, trialNum);
         errors = zeros(1, trialNum);
+
+
         trialData(trialNum) = struct();
 
         for trialIdx = 1:trialNum
@@ -134,9 +141,14 @@ function main()
             disp(['Trial ', num2str(trialIdx), ' - RT: ', num2str(RTs(trialIdx)), ', Error: ', num2str(err)]);
 
             trialData(trialIdx).trial_index = trialIdx;
+            trialData(trialIdx).original_problem_index = combinedOriginalIndices(trialIdx);
             trialData(trialIdx).correct_indices = correctCardIndices;
-            trialData(trialIdx).response_time = RTs(trialIdx);
+            % trialData(trialIdx).response_time = RTs(trialIdx);
+            trialData(trialIdx).response_time = EndTime - StartTime;
             trialData(trialIdx).error = err;
+        
+            % 추가: 그룹 내 여부 저장
+            trialData(trialIdx).within_group = withinGroupFlags(trialIdx);
 
             DrawFormattedText(windowPtr, 'Press any key for next trial', 'center', 'center', [0 0 0]);
             Screen('Flip', windowPtr);
@@ -149,8 +161,6 @@ function main()
         results = struct();
         results.participant_id = participant_id;
         results.responses = responses;
-        results.RTs = RTs;
-        results.errors = errors;
         results.trials = trialData;
 
         save(filename, 'results');
