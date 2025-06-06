@@ -1,14 +1,17 @@
 function main()
     try
-        Screen('Preference','SkipSyncTests', 1);
-        [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1920 1080]);
+        Screen('Preference','SkipSyncTests', 2);
+        screens = Screen('Screens'); % 사용 가능한 스크린 확인
+        screenNumber = max(screens); % 일반적으로 외장 모니터가 우선됨
+        [width, height] = Screen('WindowSize', screenNumber);
+        [windowPtr, rect] = Screen('OpenWindow', screenNumber, [255 255 255], [0 0 width height]);
+        %[windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1920 1080]);
         InitializePsychSound(1);
         ListenChar(2);
-
         %% 설문조사 실행
         responses = runSurvey(windowPtr, rect);
         WaitSecs(2);
-
+        
         %% SET 게임 설명
         instructionImages = {
         'Images/instruction-1.png',
@@ -25,7 +28,7 @@ function main()
 
         Screen('FillRect', windowPtr, [150 150 150],[0 0 1920 1080]); %회색바탕 생성
         Screen('Flip', windowPtr);
-        
+
         %% 위치 지정 (3x4)
         numMap = containers.Map({'one','two','three','four'}, {1, 2, 3, 4});
         [xGrid, yGrid] = meshgrid(300:450:1650, 200:330:860);
@@ -51,7 +54,7 @@ function main()
 
             correctCardIndices = practiceProblemsAns{trialIdx};
             StartTime = Screen('Flip', windowPtr);
-            
+
             [EndTime, err] = CheckMouseClicks(positions(correctCardIndices(1),:), ...
                                               positions(correctCardIndices(2),:), ...
                                               positions(correctCardIndices(3),:));
@@ -105,10 +108,10 @@ function main()
         combinedAns = [allAns(firstSetIdx), allAns(9), allAns(secondSetIdx), allAns(10), allAns(thirdSetIdx)];
 
         trialNum = 10;
-        
+
         % 원래 문제 번호를 기록하는 배열
         combinedOriginalIndices = [firstSetIdx, -1, secondSetIdx, -2, thirdSetIdx];  
-        
+
         % isingroup 적용: 결과는 1x10 logical vector
         withinGroupFlags = isingroup(responses.group, combinedOriginalIndices);
 
@@ -157,6 +160,10 @@ function main()
         results.trials = trialData;
 
         save(filename, 'results');
+
+        DrawFormattedText(windowPtr, 'Test is Over.\n Thank you for your participation.\n Program will end automatically. ', 'center', 'center', [0 0 0]);
+        Screen('Flip', windowPtr);
+        WaitSecs(3);
         sca;
 
     catch ME
