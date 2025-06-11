@@ -15,12 +15,6 @@ function analyze_all_results(folderName)
         varNames = fieldnames(fileData);
         data = fileData.(varNames{1});
 
-        % 유효한 results 구조인지 검사
-        if ~isfield(data, 'trials') || ~isfield(data, 'responses')
-            warning('Invalid results structure in file: %s', files(i).name);
-            continue;
-        end
-
         % trials: struct 배열 → table
         trials = struct2table(data.trials);
         nTrials = height(trials);
@@ -83,7 +77,7 @@ function analyze_all_results(folderName)
 
     % 결과 출력
     fprintf('그룹별 반응시간 차이 (ANOVA):\n');
-    fprintf(' - 반응시간 ANOVA p = %.4f\n', p_group_rt);
+    fprintf('반응시간 ANOVA p = %.4f\n', p_group_rt);
 
     % 결과 저장
     anovaTable = cell2table(tbl_group_rt(2:end,:), 'VariableNames', tbl_group_rt(1,:));
