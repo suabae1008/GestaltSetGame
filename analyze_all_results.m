@@ -66,7 +66,7 @@ function analyze_all_results(folderPath)
     fprintf('Survey Variables:\nAge p=%.4f, Game Freq p=%.4f, Strategy p=%.4f\n', ...
         p_age, p_freq, p_strat);
 
-    %% 분석 3: group(C,1,2,3)별 평균 시간
+    %% 분석 3: group(C,1,2,3)별 평균 시간 
     groups = findgroups(allData.group);
     groupMeans = splitapply(@mean, allData.response_time, groups);
     groupAccs = splitapply(@(x) mean(1 - x), allData.error, groups);
@@ -75,7 +75,19 @@ function analyze_all_results(folderPath)
     groupSummary = table(groupNames, groupMeans, groupAccs, ...
         'VariableNames', {'Group', 'MeanRT', 'Accuracy'});
     writetable(groupSummary, fullfile(saveFolder, 'group_summary.csv'));
-    
+
+    % 그룹별 반응시간 차이에 대한 일원분산분석 (ANOVA)
+    groupLabels = allData.group;  % 그룹 라벨 (예: 'C', '1', '2', '3')
+    [p_group_rt, tbl_group_rt, stats_group_rt] = anova1(allData.response_time, groupLabels, 'off');
+
+    % 결과 출력
+    fprintf('그룹별 반응시간 차이 (ANOVA):\n');
+    fprintf(' - 반응시간 ANOVA p = %.4f\n', p_group_rt);
+
+    % 결과 저장
+    anovaTable = cell2table(tbl_group_rt(2:end,:), 'VariableNames', tbl_group_rt(1,:));
+    writetable(anovaTable, fullfile(saveFolder, 'anova_group_rt.csv'));
+
     %% 전체 테이블 저장
     writetable(allData, fullfile(saveFolder, 'all_cleaned_data.csv'));
 
