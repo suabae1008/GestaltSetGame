@@ -1,16 +1,17 @@
-function analyze_all_results(folderPath)
+function analyze_all_results(folderName)
     % 모든 .mat 파일을 읽고 trials + responses 정보 병합하여 분석 수행
-    files = dir(fullfile(folderPath, '*.mat'));
+    files = dir(fullfile(folderName, '*.mat'));
     allData = [];
 
-    % 결과 저장 폴더
-    saveFolder = fullfile(folderPath, 'analysis_results');
+    % 상위 폴더에 결과 저장 폴더 생성
+    parentFolder = fileparts(folderName);  
+    saveFolder = fullfile(parentFolder, 'analysis_results');
     if ~exist(saveFolder, 'dir')
         mkdir(saveFolder);
     end
 
     for i = 1:length(files)
-        fileData = load(fullfile(folderPath, files(i).name));
+        fileData = load(fullfile(parentFolder, files(i).name));
         varNames = fieldnames(fileData);
         data = fileData.(varNames{1});
 
@@ -77,7 +78,7 @@ function analyze_all_results(folderPath)
     writetable(groupSummary, fullfile(saveFolder, 'group_summary.csv'));
 
     % 그룹별 반응시간 차이에 대한 일원분산분석 (ANOVA)
-    groupLabels = allData.group;  % 그룹 라벨 (예: 'C', '1', '2', '3')
+    groupLabels = allData.group;
     [p_group_rt, tbl_group_rt, stats_group_rt] = anova1(allData.response_time, groupLabels, 'off');
 
     % 결과 출력
