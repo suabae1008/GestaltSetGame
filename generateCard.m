@@ -30,7 +30,7 @@ function generateCard(screen, shape, color, pattern, num, position)
     % 개수 만들기
     switch num
         case 1
-            NumShapePos = [position(1), position(2), position(1), position(2)];
+            NumShapePos = [position(1), position(2)];
         case 2
             NumShapePos = [position(1), position(2)+40; position(1), position(2)-40];
         case 3
