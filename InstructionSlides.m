@@ -2,7 +2,8 @@ function InstructionSlides(windowPtr, instructionImages)
     % 슬라이드 개수
     numSlides = length(instructionImages);
     currentIndex = 1;
-
+    
+    % 슬라이드 재생
     while true
         % 이미지 불러오기 및 텍스처 생성
         img = imread(instructionImages{currentIndex});
@@ -13,7 +14,7 @@ function InstructionSlides(windowPtr, instructionImages)
         DrawFormattedText(windowPtr, 'Press Enter to continue, Backspace to go back', ...
                           'center', 1000, [0 0 0]);
         Screen('Flip', windowPtr);
-        Screen('Close', texture);  % 텍스처 제거 (메모리 절약)
+        Screen('Close', texture);  % 텍스처 제거
 
         % 키 입력 대기 및 릴리즈
         [~, keyCode] = KbStrokeWait;
