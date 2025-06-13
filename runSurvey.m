@@ -1,13 +1,8 @@
-function responses = runSurvey(windowPtr, rect);  
-    
-    % Screen('Preference','SkipSyncTests', 2);
-    % [windowPtr, rect] = Screen('OpenWindow', 0, [255 255 255], [0 0 1290 900]);
-    
-    % Psychtoolbox 초기화
+function responses = runSurvey(windowPtr, rect); 
+    %초기화
     ListenChar(2);
     Screen('TextSize', windowPtr, 36);
     KbName('UnifyKeyNames');
-    
     
     %설문 시작 안내
     openingText = 'Survey will start soon.\n Please use the keypad and Enter to answer the questions';
@@ -38,8 +33,8 @@ function responses = runSurvey(windowPtr, rect);
      '   2. I sequentially check each part']
 };
 
-    inputTypes = {'key', 'text', 'text', 'key', 'key', 'key', 'key'};
-    validKeys = {{'C','1','2','3'}, {},{} {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};
+    inputTypes = {'key', 'text', 'text', 'key', 'key', 'key', 'key'}; %input type 구별
+    validKeys = {{'C','1','2','3'}, {},{} {'M','F'}, {'Y','N'}, {'1','2','3','4','5'}, {'1','2'}};%key 설정
     question_label = {{},{},{'1. Age : '}, {'2. Gender : '}, {'3. Played SET : '},...
         {'4. Playing Puzzles : '}, {'5. Visual strategy :'}};
     labels = {{}, {}, {}, {'Male','Female'}, {'Yes','No'}, {}, {}};
@@ -56,16 +51,16 @@ function responses = runSurvey(windowPtr, rect);
 
     % 질문 답 루프
  for q = 1:length(questions)
-    if strcmp(inputTypes{q}, 'text')
+    if strcmp(inputTypes{q}, 'text') %text = getTextInput()
         responses_raw{q} = getTextInput(windowPtr, rect, questions{q});
         responses_confirm{q} = responses_raw{q}; 
-    else
+    else                             %key = getKeyInput()
         responses_raw{q} = getKeyInput(windowPtr, rect, questions{q}, validKeys{q}, labels{q});
         idx = find(strcmpi(responses_raw{q}, validKeys{q}), 1);
         if ~isempty(idx) && ~isempty(labels_confirm{q})
             responses_confirm{q} = labels_confirm{q}{idx};  % 확인용 label로 저장
         else
-            responses_confirm{q} = responses_raw{q};  % fallback
+            responses_confirm{q} = responses_raw{q};
         end
     end
 end
@@ -86,16 +81,17 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
         key = KbName(find(kc));
         if iscell(key), key = key{1}; 
         end
+
         if strcmpi(key, 'Y')
             break;
         elseif strcmpi(key, 'N')
-            runSurvey();  % 재시작
+            runSurvey();         % 재시작
             return;
         end
     end
 
-    % 저장 표시
-    disp('==== Survey Result ====');
+    % 저장 표시 및 struct 구조 저장
+    disp('[Survey Result]');
     for i = 1:length(questions)
         fprintf('Q%d: %s\n', i, responses_confirm {i});
     end
@@ -117,7 +113,7 @@ confirmText = [confirmText, '\n\nPress Y to confirm, N to restart'];
 
     ListenChar(0); % 키보드 제어 복원
     ShowCursor;    % 마우스 커서 복원
-    % sca;
+    
 end
 
 %숫자, 1번 문항 input
@@ -126,7 +122,7 @@ function inputText = getTextInput(w, rect, prompt)
     KbName('UnifyKeyNames');
     
     while true
-        % 입력 화면 갱신
+        % 화면 표시 (실시간 입력 출력)
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
         DrawFormattedText(w, ['>> ' inputText], 'center', rect(4)*0.5, [0 0 0]);
@@ -172,7 +168,7 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
     KbName('UnifyKeyNames');
 
     while ~confirmed
-        % 화면 표시
+        % 화면 표시 (실시간 입력 출력)
         Screen('FillRect', w, [255 255 255]);
         DrawFormattedText(w, prompt, 'center', rect(4)*0.4, [0 0 0]);
         DrawFormattedText(w, ['>> ' inputDisplay], 'center', rect(4)*0.75, [0 0 0]);
@@ -197,10 +193,9 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
             key = extractAfter(key, 'KP_');
         end
 
-        % 동작 분기
-        if strcmp(key, 'RETURN') || strcmp(key, 'ENTER')
-            % Enter 키 입력 → 이전에 입력된 키를 확정
-            if ~isempty(inputKey)
+        % Enter 키 입력 → 키 확정 (실수 및 오류 방지)
+        if strcmp(key, 'RETURN') || strcmp(key, 'ENTER') 
+            if ~isempty(inputKey) 
                 if isempty(validKeys) || any(strcmpi(inputKey, validKeys))
                     idx = find(strcmpi(inputKey, validKeys), 1);
                     if ~isempty(labels) && ~isempty(idx)
@@ -215,9 +210,8 @@ function result = getKeyInput(w, rect, prompt, validKeys, labels)
             inputKey = '';
             inputDisplay = '';
         elseif isempty(validKeys) || any(strcmpi(key, validKeys))
-            % 유효 키 입력 → 화면에 표시만 (아직 확정 아님)
             inputKey = key;
-            inputDisplay = key;
+            inputDisplay = key; % 유효 키 입력 → 화면에 표시
         end
 
         WaitSecs(0.15);  % 연속 입력 방지
