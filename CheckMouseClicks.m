@@ -44,12 +44,8 @@ while true
 
     if allInside == true
         EndTime = GetSecs();
-        freq1 = 880;  
-        freq2 = 1760; 
-        
-        fs = 44100;   
-        tone1 = MakeBeep(freq1, 0.1, fs);  
-        tone2 = MakeBeep(freq2, 0.1, fs); 
+        tone1 = MakeBeep(880, 0.1, 44100);  
+        tone2 = MakeBeep(1760, 0.1, 44100); 
         
         soundData = [tone1, tone2];
         
