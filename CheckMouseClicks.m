@@ -44,12 +44,11 @@ while true
 
     if allInside == true
         EndTime = GetSecs();
-        tone1 = MakeBeep(880, 0.1, 44100);  
-        tone2 = MakeBeep(1760, 0.1, 44100); 
-        
-        soundData = [tone1, tone2];
-        
+
         pahandle = PsychPortAudio('Open', [], 1, 1, fs, 1);
+        tone1 = MakeBeep(880, 0.1, 44100);  
+        tone2 = MakeBeep(1760, 0.1, 44100);     
+        soundData = [tone1, tone2];
         PsychPortAudio('FillBuffer', pahandle, soundData);
         PsychPortAudio('Start', pahandle);
         PsychPortAudio('Stop', pahandle, 1);
@@ -57,6 +56,7 @@ while true
         break;
     else
         error = error + 1;
+        
         pahandle = PsychPortAudio('Open', [], 1, 1, 44100, 1);
         tone = MakeBeep(500, 0.1, 44100);
         PsychPortAudio('FillBuffer', pahandle, tone);
