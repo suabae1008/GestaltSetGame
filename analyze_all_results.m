@@ -76,7 +76,7 @@ function analyze_all_results(folderName)
     %% 분석 3: group(C,1,2,3)별 평균 시간 
     groups = findgroups(allData.group);
     groupMeans = splitapply(@mean, allData.response_time, groups);
-    groupAccs = splitapply(@(x) mean(1 - x), allData.error, groups);
+    groupAccs = splitapply(@(x) mean(x), allData.error, groups);
     groupNames = splitapply(@(x) x(1), allData.group, groups);
 
     %그룹 요약 테이블 생성 및 저장
@@ -107,10 +107,10 @@ function analyze_all_results(folderName)
     ylabel('Response Time (s)');
 
     subplot(1,2,2)
-    boxplot(1 - allData.error, allData.within_group, ...
+    boxplot(allData.error, allData.within_group, ...
     'Labels', {'Between', 'Within'});
-    title('Accuracy: Within vs Between');
-    ylabel('Accuracy');
+    title('Error: Within vs Between');
+    ylabel('Errors');
     saveas(gcf, fullfile(saveFolder, 'within_vs_between_boxplots.png'));
     
     %그룹별 반응시간 박스플롯
