@@ -23,7 +23,6 @@ function analyze_all_results(folderName)
         trials = trials(~ismember(trials.original_problem_index, [-1,-2]), :);
         nTrials = height(trials);
 
-
         % responses: 구조체 → 변수 추가
         R = data.responses;
         trials.participant_id = repmat({data.participant_id}, nTrials, 1);
