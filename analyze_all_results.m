@@ -18,7 +18,11 @@ function analyze_all_results(folderName)
 
         % trials struct 배열 → table
         trials = struct2table(data.trials);
+        
+        % !!환기문제 제거!!
+        trials = trials(~ismember(trials.original_problem_index, [-1,-2]), :);
         nTrials = height(trials);
+
 
         % responses: 구조체 → 변수 추가
         R = data.responses;
@@ -53,8 +57,8 @@ function analyze_all_results(folderName)
     M_between_a = mean(between.error);
 
     fprintf('Group Within vs Between:\n');
-    fprintf('Response time mean: Within = %4f  Between = %4f',M_within_r, M_between_r );
-    fprintf('Accuaracy mean: Within = %4f  Between = %4f',M_within_a, M_between_a );
+    fprintf('Response time mean: Within = %4f  Between = %4f\n',M_within_r, M_between_r );
+    fprintf('Accuaracy mean: Within = %4f  Between = %4f\n',M_within_a, M_between_a );
     fprintf('Response Time p = %.4f\nAccuracy p = %.4f\n\n', p_rt, p_acc);
 
     %% 분석 2: 설문 변수별 반응 시간 차이 (age, frequency, strategy)
