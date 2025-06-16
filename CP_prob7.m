@@ -24,9 +24,11 @@ function CP_prob7(dataDir)
                     continue;
                 end
 
+                prob_idx = trials(t).original_problem_index;
+
                 if trials(t).original_problem_index == 7
                     rt_problem7(end+1) = rt;
-                else
+                elseif prob_idx ~= -1 && prob_idx ~= -2
                     rt_other(end+1) = rt;
                 end
             end
