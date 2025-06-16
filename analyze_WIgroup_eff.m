@@ -31,7 +31,7 @@ function analyze_WIgroup_eff(folderName)
             continue;
         end
 
-        validIdx = ~isnan(trials.response_time);
+        validIdx = ~isnan(trials.response_time) & trials.original_problem_index ~= -1 & trials.original_problem_index ~= -2;
         rt = trials.response_time(validIdx);
         wg = trials.within_group(validIdx);
 
