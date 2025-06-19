@@ -111,6 +111,14 @@ trial_index,original_problem_index,correct_indices_1,correct_indices_2,correct_i
 7,2,3,4,12,44.5075252000242,0,1,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
 9,8,1,7,12,42.0621572999517,0,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
 10,4,9,11,12,97.5202117000008,0,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+1,6,8,11,12,90.4074512000001,2,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+2,3,5,6,8,370.584111,1,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,1
+3,7,2,7,10,12.4290874000001,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+5,8,1,7,12,182.6915803,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+6,5,1,2,5,921.822745,1,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,1
+7,1,1,6,10,97.6735302000002,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+9,2,3,4,12,59.8124871,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,66.6716506999996,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
 1,6,8,11,12,11.6610298999876,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
 2,3,5,6,8,5.820613399992,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
 3,7,2,7,10,9.11590289999731,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
@@ -119,6 +127,14 @@ trial_index,original_problem_index,correct_indices_1,correct_indices_2,correct_i
 7,1,1,6,10,380.965248399996,1,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,1
 9,2,3,4,12,21.6762220999808,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
 10,4,9,11,12,70.9342812999967,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+1,6,8,11,12,34.1914802,1,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,7.52657929999998,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,577.8316768,8,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,1
+5,8,1,7,12,41.0048952,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,320.9079506,3,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,1
+7,1,1,6,10,35.2359563,1,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,88.2783523999999,0,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+10,4,9,11,12,27.7047704000001,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
 1,6,8,11,12,194.319712800032,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
 2,3,5,6,8,95.0207899999805,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
 3,7,2,7,10,22.8943038999569,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
@@ -127,6 +143,14 @@ trial_index,original_problem_index,correct_indices_1,correct_indices_2,correct_i
 7,1,1,6,10,53.3808070000377,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
 9,2,3,4,12,129.042546800047,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
 10,4,9,11,12,113.662083200004,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+1,6,8,11,12,14.4843468999998,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,38.7132555999997,0,1,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,245.0244661,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+5,8,1,7,12,9.1264627999999,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,29.3287336999992,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+7,1,1,6,10,97.7582397000006,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,73.8616967000007,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+10,4,9,11,12,277.713204,0,1,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
 1,6,8,11,12,433.789031799999,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,1
 2,3,5,6,8,36.6014041000744,1,1,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
 3,7,2,7,10,134.771260299953,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
@@ -136,8 +160,8 @@ trial_index,original_problem_index,correct_indices_1,correct_indices_2,correct_i
 9,2,3,4,12,129.502412699978,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
 10,4,9,11,12,45.1176109000808,0,1,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
 1,8,1,7,12,84.6604081999976,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
-2,3,5,6,8,272.686220000032,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,1
-3,6,8,11,12,271.419381899992,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,1
+2,3,5,6,8,272.686220000032,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+3,6,8,11,12,271.419381899992,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
 5,7,2,7,10,506.901979400078,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,1
 6,5,1,2,5,49.8281654999591,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
 7,1,1,6,10,68.9096586999949,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
