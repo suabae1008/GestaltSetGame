@@ -44,6 +44,11 @@ function analyze_all_results(folderName)
     summaryStats = table;
 
     %% 기본 정보: 참가자 요약 (실험군, 나이, 성별, 게임 빈도, 전략 기준)
+    %기본 분석방법:
+    %[groupCounsts, 분석그룹] = gropucounts(allData.분석그룹); : 같은그룹 항목개수 확인
+    %groupTable = table(분석그룹, 분석내용counts/8, table 열 이름 지정);
+    %*데이터를 참가자 수로 환산해야하기 때문에 counnt를 8(실제문제 개수)로 나누어야함
+
 
     % 1. 실험군별 참가자 수
     [groupCounts, groupNames] = groupcounts(allData.group);
@@ -84,7 +89,7 @@ function analyze_all_results(folderName)
     within = allData(allData.within_group==1, :);
     between = allData(allData.within_group==0, :);
     
-    %반응 시간, 정확도 비교
+    %반응 시간, 정확도 비교 (ttest 이용)
     [~, p_rt] = ttest2(within.response_time, between.response_time);
     [~, p_acc] = ttest2(within.error, between.error==0);
     M_within_r = mean(within.response_time);
@@ -103,7 +108,7 @@ function analyze_all_results(folderName)
     g2 = findgroups(allData.game_frequency);
     g3 = findgroups(allData.strategy);
 
-    %나이, 게임횟수, 분석전략별 반응시간 차이
+    %나이, 게임횟수, 분석전략별 반응시간 차이(anova이용)
     [p_age, tbl_age, ~] = anova1(allData.response_time, g1, 'off');
     [p_freq, tbl_freq, ~] = anova1(allData.response_time, g2, 'off');
     [p_strat, tbl_strat, ~] = anova1(allData.response_time, g3, 'off');
@@ -142,7 +147,7 @@ function analyze_all_results(folderName)
     anovaTable = cell2table(tbl_group_ac(2:end,:), 'VariableNames',tbl_group_ac(1,:));
     writetable(anovaTable, fullfile(saveFolder, 'anova_group_ac.csv'));
 
-    %% 분석결과 시각화
+    %% 분석결과 시각화 (boxplot 이용)
 
     % 그룹 내 외 반응시간 & 오답수
     figure;
