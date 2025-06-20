@@ -43,6 +43,30 @@ function analyze_all_results(folderName)
     % 분석 결과 저장용 테이블
     summaryStats = table;
 
+    %% 기본 정보: 참가자 수 요약 (실험군, 나이, 성별 기준)
+
+    % 1. 실험군별 참가자 수
+    [groupCounts, groupNames] = groupcounts(allData.group);
+    groupTable = table(groupNames, groupCounts/8, ...
+    'VariableNames', {'Group', 'ParticipantCount'});
+    disp('실험군별 참가자 수:');
+    disp(groupTable);
+
+    % 2. 나이별 참가자 수
+    [ageCounts, ageGroups] = groupcounts(allData.age);
+    ageTable = table(ageGroups, ageCounts/8, ...
+    'VariableNames', {'Age', 'ParticipantCount'});
+    disp('나이별 참가자 수:');
+    disp(ageTable);
+
+    % 3. 성별 참가자 수
+    [genderCounts, genderGroups] = groupcounts(allData.gender);
+    genderTable = table(genderGroups, genderCounts/8, ...
+    'VariableNames', {'Gender', 'ParticipantCount'});
+    disp('성별 참가자 수:');
+    disp(genderTable);
+
+
     %% 분석 1: 그룹 내 vs 외 반응시간 및 정확도 비교
     within = allData(allData.within_group==1, :);
     between = allData(allData.within_group==0, :);
