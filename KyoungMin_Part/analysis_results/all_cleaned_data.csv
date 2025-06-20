@@ -1,0 +1,185 @@
+trial_index,original_problem_index,correct_indices_1,correct_indices_2,correct_indices_3,response_time,error,within_group,participant_id,group,age,gender,SET_experience,game_frequency,strategy,outlier
+1,6,8,11,12,42.7851176999975,5,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+2,3,5,6,8,60.952540300088,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+3,7,2,7,10,181.229123800062,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+5,8,1,7,12,6.68145829997957,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+6,5,1,2,5,10.9484069000464,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+7,1,1,6,10,16.3157650000649,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+9,2,3,4,12,4.77128670003731,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+10,4,9,11,12,30.3774965000339,0,0,P20250605_154120,C,23,female,0,Never (less than once a month),1,0
+1,8,1,7,12,230.271809299942,7,0,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+2,3,5,6,8,22.3109650000697,0,0,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+3,6,8,11,12,9.44071830005851,0,1,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+5,7,2,7,10,97.4413677999983,0,0,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+6,5,1,2,5,465.029206199921,9,1,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,1
+7,1,1,6,10,23.4041903000325,0,1,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+9,2,3,4,12,23.7457687000278,0,1,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+10,4,9,11,12,36.4863593000919,0,0,P20250605_162740,1,28,male,0,Sometimes (about once a week),1,0
+1,6,8,11,12,14.8700182000175,0,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+2,3,5,6,8,59.9705374999903,0,1,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+3,7,2,7,10,768.229824899929,1,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,1
+5,8,1,7,12,12.5219615000533,0,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+6,5,1,2,5,189.220621300046,0,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+7,1,1,6,10,48.0707200000761,0,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+9,2,3,4,12,31.1097493999405,0,0,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+10,4,9,11,12,16.4473085999489,0,1,P20250605_204305,2,25,male,0,Never (less than once a month),1,0
+1,6,8,11,12,16.1098880999489,0,1,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+2,3,5,6,8,58.1469802999636,0,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+3,7,2,7,10,821.182669800008,1,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,1
+5,8,1,7,12,26.5237477999181,0,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+6,5,1,2,5,113.176574900048,0,1,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+7,1,1,6,10,10.0485275998944,0,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+9,2,3,4,12,14.6012783999322,0,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+10,4,9,11,12,26.0838407999836,0,0,P20250605_212033,3,25,male,0,Sometimes (about once a week),1,0
+1,8,1,7,12,39.4755542000057,1,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+2,3,5,6,8,19.4887019000016,0,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+3,6,8,11,12,113.560497500002,1,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+5,7,2,7,10,17.9733009000774,0,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+6,5,1,2,5,17.6588028999977,0,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+7,1,1,6,10,118.089351500035,1,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+9,2,3,4,12,78.0994524999987,1,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+10,4,9,11,12,15.3643953000428,0,0,P20250605_214059,C,23,male,0,Never (less than once a month),2,0
+1,6,8,11,12,37.977175,1,1,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+2,3,5,6,8,16.3010329999997,0,0,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+3,7,2,7,10,46.6234249999998,0,0,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+5,8,1,7,12,4.11421279999922,0,0,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+6,5,1,2,5,221.319558699999,4,1,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+7,1,1,6,10,43.5120552000008,0,1,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+9,2,3,4,12,86.4103298999999,0,1,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+10,4,9,11,12,68.4984982000005,0,0,P20250606_174638,1,24,male,0,Never (less than once a month),1,0
+1,6,8,11,12,23.8763503,0,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,16.9085848,0,1,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,429.7348528,1,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,1
+5,8,1,7,12,11.2408733,0,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,113.5185332,0,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+7,1,1,6,10,31.4635389999999,0,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,57.7632666,1,0,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+10,4,9,11,12,128.3173908,0,1,P20250608_135857,2,23,female,0,Never (less than once a month),2,0
+1,6,8,11,12,33.1409057000001,0,1,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,36.7636801000003,0,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,1000.2220242,3,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,1
+5,8,1,7,12,86.1098538999995,0,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,7.58698800000002,0,1,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+7,1,1,6,10,53.1479309000006,2,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,535.6705712,0,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,1
+10,4,9,11,12,12.6126712999994,0,0,P20250608_145443,3,23,female,0,Never (less than once a month),2,0
+1,6,8,11,12,115.754741299999,8,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+2,3,5,6,8,8.11892960000114,0,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+3,7,2,7,10,221.114197999999,13,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+5,8,1,7,12,3.58885610000107,0,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+6,5,1,2,5,26.5750468000006,1,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+7,1,1,6,10,35.7366490999993,3,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+9,2,3,4,12,35.0266878999992,1,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+10,4,9,11,12,36.4145511000006,0,0,P20250608_163210,C,21,female,0,Often (2–3 times a week),1,0
+1,8,1,7,12,24.6930678999997,0,0,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+2,3,5,6,8,7.46207429999959,0,0,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+3,6,8,11,12,22.8093329999992,1,1,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+5,7,2,7,10,148.1021009,3,0,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+6,5,1,2,5,26.5351992999986,1,1,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+7,1,1,6,10,115.599267899999,4,1,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+9,2,3,4,12,112.4129104,1,1,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+10,4,9,11,12,33.5236925999998,0,0,P20250608_170427,1,25,male,0,Never (less than once a month),2,0
+1,6,8,11,12,14.1302863,0,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+2,3,5,6,8,13.0985496000001,0,1,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+3,7,2,7,10,14.7730111,0,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+5,8,1,7,12,6.89572990000011,0,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+6,5,1,2,5,16.3501214999999,0,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+7,1,1,6,10,60.5333785,0,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+9,2,3,4,12,37.0698486000001,1,0,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,7.89912449999997,0,1,P20250608_213706,2,23,female,0,Rarely (2–3 times a month),2,0
+1,6,8,11,12,118.457736,2,1,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+2,3,5,6,8,200.0871266,1,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+3,7,2,7,10,82.9944538000002,0,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+5,8,1,7,12,12.7281169,0,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+6,5,1,2,5,170.1348298,0,1,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+7,1,1,6,10,130.8572447,1,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+9,2,3,4,12,533.487963,1,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,1
+10,4,9,11,12,145.1556081,0,0,P20250609_154753,3,23,male,0,Never (less than once a month),1,0
+1,6,8,11,12,80.1648904000001,1,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+2,3,5,6,8,28.2551083000001,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+3,7,2,7,10,545.066737,2,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,1
+5,8,1,7,12,51.8775566999998,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+6,5,1,2,5,6.98995439999999,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+7,1,1,6,10,56.1211836000002,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+9,2,3,4,12,67.0981827999999,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,0
+10,4,9,11,12,435.7731831,0,0,P20250610_170108,C,21,female,0,Never (less than once a month),2,1
+1,6,8,11,12,721.457414000062,0,1,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,1
+2,1,1,6,10,17.7256002000067,0,1,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+3,5,1,2,5,142.448889499996,0,1,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+5,3,5,6,8,16.5644839999732,0,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+6,7,2,7,10,290.462144999998,1,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,1
+7,2,3,4,12,44.5075252000242,0,1,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+9,8,1,7,12,42.0621572999517,0,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,97.5202117000008,0,0,P20250611_145704,1,25,male,0,Rarely (2–3 times a month),2,0
+1,6,8,11,12,90.4074512000001,2,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+2,3,5,6,8,370.584111,1,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,1
+3,7,2,7,10,12.4290874000001,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+5,8,1,7,12,182.6915803,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+6,5,1,2,5,921.822745,1,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,1
+7,1,1,6,10,97.6735302000002,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+9,2,3,4,12,59.8124871,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,66.6716506999996,0,0,P20250605_131852,C,23,male,0,Rarely (2–3 times a month),2,0
+1,6,8,11,12,11.6610298999876,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+2,3,5,6,8,5.820613399992,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+3,7,2,7,10,9.11590289999731,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+5,8,1,7,12,4.56147459999193,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+6,5,1,2,5,21.8813800999778,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+7,1,1,6,10,380.965248399996,1,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,1
+9,2,3,4,12,21.6762220999808,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+10,4,9,11,12,70.9342812999967,0,0,P20250605_190914,C,23,male,0,Rarely (2–3 times a month),1,0
+1,6,8,11,12,34.1914802,1,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,7.52657929999998,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,577.8316768,8,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,1
+5,8,1,7,12,41.0048952,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,320.9079506,3,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,1
+7,1,1,6,10,35.2359563,1,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,88.2783523999999,0,1,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+10,4,9,11,12,27.7047704000001,0,0,P20250610_145442,1,23,female,0,Never (less than once a month),2,0
+1,6,8,11,12,194.319712800032,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+2,3,5,6,8,95.0207899999805,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+3,7,2,7,10,22.8943038999569,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+5,8,1,7,12,677.055164799967,1,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,1
+6,5,1,2,5,48.4388663999853,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+7,1,1,6,10,53.3808070000377,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+9,2,3,4,12,129.042546800047,0,1,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+10,4,9,11,12,113.662083200004,0,0,P20250608_222328,1,23,female,0,Often (2–3 times a week),2,0
+1,6,8,11,12,14.4843468999998,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+2,3,5,6,8,38.7132555999997,0,1,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+3,7,2,7,10,245.0244661,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+5,8,1,7,12,9.1264627999999,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+6,5,1,2,5,29.3287336999992,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+7,1,1,6,10,97.7582397000006,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+9,2,3,4,12,73.8616967000007,0,0,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+10,4,9,11,12,277.713204,0,1,P20250610_162232,2,23,female,0,Never (less than once a month),2,0
+1,6,8,11,12,433.789031799999,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,1
+2,3,5,6,8,36.6014041000744,1,1,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+3,7,2,7,10,134.771260299953,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+5,8,1,7,12,96.7614100999199,1,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+6,5,1,2,5,15.7386970000807,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+7,1,1,6,10,710.24970340007,3,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,1
+9,2,3,4,12,129.502412699978,0,0,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,45.1176109000808,0,1,P20250610_152954,2,23,male,0,Rarely (2–3 times a month),2,0
+1,8,1,7,12,84.6604081999976,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+2,3,5,6,8,272.686220000032,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+3,6,8,11,12,271.419381899992,1,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+5,7,2,7,10,506.901979400078,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,1
+6,5,1,2,5,49.8281654999591,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+7,1,1,6,10,68.9096586999949,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+9,2,3,4,12,61.6228884999873,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+10,4,9,11,12,65.6983523999806,0,0,P20250610_161952,C,24,male,0,Rarely (2–3 times a month),2,0
+1,6,8,11,12,85.4652116999496,1,1,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+2,3,5,6,8,71.9465217000106,1,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+3,7,2,7,10,106.048064699979,1,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+5,8,1,7,12,243.346146999975,5,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+6,5,1,2,5,83.5806371000363,0,1,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+7,1,1,6,10,47.4252936000703,0,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+9,2,3,4,12,28.5810996000655,0,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+10,4,9,11,12,113.934739900054,1,0,P20250610_165226,3,21,male,0,Never (less than once a month),2,0
+1,8,1,7,12,108.995589300059,0,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,0
+2,3,5,6,8,79.1176017000107,0,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,0
+3,6,8,11,12,121.098566400004,0,1,P20250610_180740,3,27,male,0,Never (less than once a month),2,0
+5,7,2,7,10,944.687659299932,1,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,1
+6,5,1,2,5,632.437332300004,8,1,P20250610_180740,3,27,male,0,Never (less than once a month),2,1
+7,1,1,6,10,345.512486299966,0,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,1
+9,2,3,4,12,186.318176800036,0,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,0
+10,4,9,11,12,39.3146813999629,0,0,P20250610_180740,3,27,male,0,Never (less than once a month),2,0
