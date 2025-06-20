@@ -43,7 +43,7 @@ function analyze_all_results(folderName)
     % 분석 결과 저장용 테이블
     summaryStats = table;
 
-    %% 기본 정보: 참가자 수 요약 (실험군, 나이, 성별 기준)
+    %% 기본 정보: 참가자 요약 (실험군, 나이, 성별, 게임 빈도, 전략 기준)
 
     % 1. 실험군별 참가자 수
     [groupCounts, groupNames] = groupcounts(allData.group);
@@ -66,6 +66,19 @@ function analyze_all_results(folderName)
     disp('성별 참가자 수:');
     disp(genderTable);
 
+    % 4. 게임 빈도(game_frequency) 문항별 응답자 수
+    [freqCounts, freqLabels] = groupcounts(allData.game_frequency);
+    freqTable = table(freqLabels, freqCounts/8, ...
+    'VariableNames', {'GameFrequency', 'ParticipantCount'});
+    disp('게임 빈도 문항별 응답자 수:');
+    disp(freqTable);
+
+    % 5.전략(strategy) 문항별 응답자 수 (예: Visual strategy whole vs part)
+    [stratCounts, stratLabels] = groupcounts(allData.strategy);
+    stratTable = table(stratLabels, stratCounts/8, ...
+    'VariableNames', {'Strategy', 'ParticipantCount'});
+    disp('전략 문항별 응답자 수:');
+    disp(stratTable);
 
     %% 분석 1: 그룹 내 vs 외 반응시간 및 정확도 비교
     within = allData(allData.within_group==1, :);
@@ -73,7 +86,7 @@ function analyze_all_results(folderName)
     
     %반응 시간, 정확도 비교
     [~, p_rt] = ttest2(within.response_time, between.response_time);
-    [~, p_acc] = ttest2(within.error, between.error);
+    [~, p_acc] = ttest2(within.error, between.error==0);
     M_within_r = mean(within.response_time);
     M_between_r = mean(between.response_time);
     M_within_a = mean(within.error);
@@ -83,6 +96,7 @@ function analyze_all_results(folderName)
     fprintf('Response time mean: Within = %4f  Between = %4f\n',M_within_r, M_between_r );
     fprintf('Accuaracy mean: Within = %4f  Between = %4f\n',M_within_a, M_between_a );
     fprintf('Response Time p = %.4f\nAccuracy p = %.4f\n\n', p_rt, p_acc);
+
 
     %% 분석 2: 설문 변수별 반응 시간 차이 (age, frequency, strategy)
     g1 = findgroups(allData.age);
@@ -100,7 +114,7 @@ function analyze_all_results(folderName)
     %% 분석 3: group(C,1,2,3)별 평균 시간 
     groups = findgroups(allData.group);
     groupMeans = splitapply(@mean, allData.response_time, groups);
-    groupAccs = splitapply(@(x) mean(x), allData.error, groups);
+    groupAccs = splitapply(@(x) mean(x), allData.error==0, groups);
     groupNames = splitapply(@(x) x(1), allData.group, groups);
 
     %그룹 요약 테이블 생성 및 저장
@@ -112,17 +126,25 @@ function analyze_all_results(folderName)
     groupLabels = allData.group;
     [p_group_rt, tbl_group_rt, stats_group_rt] = anova1(allData.response_time, groupLabels, 'off');
 
-   
+    % 그룹별 정답률 차이에 대한 ANOVA
+    groupLabels = allData.group;
+    [p_group_ac, tbl_group_ac, stats_group_ac] = anova1(allData.error==0, groupLabels, 'off');
+
+
     fprintf('그룹별 반응시간 차이 (ANOVA):\n');
     fprintf('반응시간 ANOVA p = %.4f\n', p_group_rt);
+    fprintf('그룹별 정답률 차이 (ANOVA):\n');
+    fprintf('정답률 ANOVA p = %.4f\n', p_group_ac);
 
     % ANOVA 결과 저장
     anovaTable = cell2table(tbl_group_rt(2:end,:), 'VariableNames', tbl_group_rt(1,:));
     writetable(anovaTable, fullfile(saveFolder, 'anova_group_rt.csv'));
+    anovaTable = cell2table(tbl_group_ac(2:end,:), 'VariableNames',tbl_group_ac(1,:));
+    writetable(anovaTable, fullfile(saveFolder, 'anova_group_ac.csv'));
 
     %% 분석결과 시각화
 
-    % 그룹 내 외 반응시간 & 정확도
+    % 그룹 내 외 반응시간 & 오답수
     figure;
     subplot(1,2,1)
     boxplot(allData.response_time, allData.within_group, ...
@@ -136,7 +158,7 @@ function analyze_all_results(folderName)
     title('Error: Within vs Between');
     ylabel('Errors');
     saveas(gcf, fullfile(saveFolder, 'within_vs_between_boxplots.png'));
-    
+
     %그룹별 반응시간 박스플롯
     figure;
     boxplot(allData.response_time, allData.group);
